@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Payment";
+    Layout = null;
+}
+
+@model List<tester1.Models.CartItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="~/Scripts/Controllers/cartController.js"></script>
+}
+
+<style>
+    .section {
+        background: #fff;
+    }
+
+    .table {
+        width: 94%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    td {
+        text-align: center; /* căn giữa ngang */
+        vertical-align: middle !important; /* căn giữa dọc */
+    }
+
+    .content {
+        width: 1200px;
+    }
+
+    .back-button {
+        background-color: #2a9dcc;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .back-button:hover {
+            background-color: #1c7baa;
+            text-decoration:none;
+            color:aliceblue;
+        }
+     .group{
+         width:1200px;
+         margin: 0 auto;
+     }
+    .content {
+        margin: 0 auto;
+    }
+    .content::after{
+        display:block;
+        content:"";
+        clear:both;
+    }
+</style>
+
+<div class="content">
+    <div class="section group">
+        <div class="col-md-4" style=" width: 49.333333%;">
+            @using(Html.BeginForm("Payment", "AddCart", FormMethod.Post, new { id = "paymentForm" }))
+            {
+                <h2>Thông tin đơn hàng</h2>
+                <div class="form-group">
+                    <label>Người nhận</label>
+                    <input name="shipName" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Điện thoại</label>
+                    <input name="mobile" class="form-control" required maxlength="11" minlength="9" />
+                </div>
+                <div class="form-group">
+                    <label>Quận:</label>
+                    <select name="district" class="form-control">
+                        <option value="Quận 1">Quận 1</option>
+                        <option value="Quận 2">Quận 2</option>
+                        <option value="Quận 3">Quận 3</option>
+                        <option value="Quận 4">Quận 4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input name="address" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Lời nhắn cho cửa hàng ...</label>
+                    <textarea class="form-control" name="note" id="inputND" style="width: 100%; resize: vertical;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Phương thức thanh toán:</label>
+                    <select class="form-control" id="paymentMethod" name="paymentMethod">
+                        <option value="1" data-method="Tiền mặt">Tiền mặt</option>
+                        <option value="2" data-method="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Gửi đơn hàng</button>
+            }
+            <a href="@Url.Action("Index", "Home")" class="back-button">Trở về</a>
+        </div>
+        <div class="col-md-8" style="width: 48.666667%; float:right">
+            @if (Model.Count > 0)
+            {
+                double totalPrice = 0;
+                <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
+                    <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Đơn hàng</h1>
+                    <div style="width: 550px; border-bottom:1px solid #ccc ; margin-bottom: 20px;" class="div"></div>
+                    <ul style="padding: 0 20px;" class="product-c">
+                        @foreach (var item in Model)
+                        {
+                            double total = item.product.GiaBan.Value * item.Quantity;
+                            totalPrice += total;
+                            <li style="display:flex;justify-content: space-between; position: relative; margin-bottom: 15px; align-items:center">
+                                <div style="position:relative">
+                                    <img width="80" height="80" style="object-fit: cover; border-radius: 7px; border: 0.7px solid #ccc;" src="@Url.Content(item.product.HinhAnh)" alt="">
+                                    <span style="font-size: .78em; white-space: nowrap; padding: 1.4px 0.72em; border-radius: 2em; background-color: #2a9dcc; color: #fff; position: absolute; top: -0.55em; z-index: 3; box-sizing: border-box; min-width: 1.75em; height: 1.75em; text-align: center; line-height: 1.75em; left:70px;">@item.Quantity</span>
+                                </div>
+                                <h2 style="color: #333; width: 60%; font-size: 19.5px; font-weight: 500; margin: 0">
+                                    @item.product.TenSP
+                                </h2>
+                                <p style="color: #717171; font-size:17px; margin:0">@String.Format("{0:#,###}", total)</p>
+                            </li>
+                        }
+                    </ul>
+                    <div style="width: 92%; border-bottom: 1.5px solid #ccc; margin: 20px auto;" class="div"></div>
+                </div>
+
+                <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
+                    <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Tổng tiền</h1>
+                    <p style="padding: 0 20px;">Tổng cộng : <span style="float:right; font-size: 21px; color: #2a9dcc;">@string.Format("{0:N0}", totalPrice) đ</span></p>
+                </div>
+            }
+            else
+            {
+               <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
+            }
+

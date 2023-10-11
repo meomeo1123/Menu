@@ -1,0 +1,123 @@
+﻿@model tester1.Models.KhuyenMai
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>KhuyenMai</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Chọn danh mục</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.IdDM, (SelectList)ViewBag.Categories, "Chọn danh mục", new { @class = "form-control", @id = "category-select" })
+                @Html.ValidationMessageFor(model => model.IdDM, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Chọn Sản Phẩm</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Masp, Enumerable.Empty<SelectListItem>(), "Chọn sản phẩm", new { @class = "form-control", @id = "product-select" })
+                @Html.ValidationMessageFor(model => model.Masp, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model._Sale, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model._Sale, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model._Sale, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayBatDau, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayBatDau, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayBatDau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayKetThuc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayKetThuc, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayKetThuc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#category-select').change(function () {
+            var categoryId = $(this).val();
+            var productList = getProductList(categoryId);
+            updateProductSelect(productList);
+        });
+    });
+
+    function getProductList(categoryId) {
+        var productList;
+        $.ajax({
+            url: '/api/products?category_id=' + categoryId,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                productList = data;
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert('Đã có lỗi xảy ra, vui lòng thử lại sau!');
+            }
+        });
+        return productList;
+    }
+
+    function updateProductSelect(productList) {
+        var productSelect = $('#product-select');
+        productSelect.empty();
+        productSelect.append($('<option>', {
+            value: '',
+            text: '-- Chọn sản phẩm --'
+        }));
+        $.each(productList, function (key, value) {
+            productSelect.append($('<option>', {
+                value: value.value,
+                text: value.text
+            }));
+        });
+        productSelect.prop('disabled', false);
+    }
+</script>
+
+
+
+
+

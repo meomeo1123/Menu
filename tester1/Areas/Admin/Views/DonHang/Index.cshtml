@@ -1,0 +1,291 @@
+﻿@model PagedList.IPagedList<tester1.Models.DonHang>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .custom-select {
+        appearance: none; /* Loại bỏ giao diện mặc định của trình duyệt */
+        padding: 8px 16px; /* Đặt khoảng cách giữa nội dung và viền */
+        border: 1px solid #ccc; /* Viền */
+        border-radius: 4px; /* Bo góc viền */
+        background-color: #fff; /* Màu nền */
+        font-size: 14px; /* Kích thước chữ */
+        color: #333; /* Màu chữ */
+        cursor: pointer; /* Con trỏ chuột thành dạng bấm */
+    }
+
+        .custom-select:hover {
+            border-color: #888; /* Màu viền khi di chuột vào */
+        }
+
+        .custom-select:focus {
+            outline: none; /* Xóa đường viền khi có focus */
+            box-shadow: 0 0 0 2px #ddd; /* Hiệu ứng shadow khi có focus */
+        }
+
+        /* Thiết lập màu nền cho các mục lựa chọn */
+        .custom-select option {
+            background-color: #fff;
+        }
+    .pagination-container {
+        display: inline-block;
+    }
+
+        .pagination-container .pagination {
+            display: inline-block;
+        }
+
+            .pagination-container .pagination li {
+                display: inline;
+                margin: 0 2px;
+                list-style-type: none;
+            }
+
+                .pagination-container .pagination li a {
+                    padding: 6px 10px;
+                    text-decoration: none;
+                    background-color: #f2f2f2;
+                    color: #333;
+                    border-radius: 4px;
+                }
+
+                .pagination-container .pagination li.active a {
+                    background-color: #428bca;
+                    color: #fff;
+                }
+
+
+</style>
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách đơn hàng</h3>
+        </div>
+        <div id="orderList" class="card-body">
+            <div class="form-group">
+                <label for="trangThai">Lọc theo trạng thái:</label>
+                <select id="trangThai" class="custom-select">
+                    <option value="">Tất cả</option>
+                    <option value="1">Đơn hàng mới</option>
+                    <option value="2">Đã xác nhận</option>
+                    <option value="3">Đang chuẩn bị món ăn</option>
+                    <option value="4">Đang giao hàng</option>
+                    <option value="5">Giao hàng thành công</option>
+                    <option value="0">Đơn hàng đã huỷ</option>
+                </select>
+                <button id="filterButton" class="btn btn-primary">Lọc</button>
+            </div>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="3%">#</th>
+                        <th width="5%">Mã đơn hàng</th>
+                        <th>Tên Khách hàng</th>
+                        <th>Phone</th>
+                        <th>Tiền</th>
+                        <th width="5%">Ngày tạo</th>
+                        <th width="15%">Lời Nhắn</th>
+                        <th width="10%">Phương Thức Thanh Toán</th>
+                        <th width="10%">Trạng thái đơn hàng hiện tại</th>
+                        <th>Giờ Huỷ Đơn</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = ((ViewBag.Page - 1) * ViewBag.PageSize) + 1;
+                        foreach (var item in Model)
+                        {
+                            var rowClass = "";
+                            var textColor = ""; // Thêm biến textColor để lưu màu chữ tương ứng
+                            switch (item.TrangThaiDonHang)
+                            {
+                                case 0:
+                                    rowClass = "table-danger"; // Màu đỏ cho trạng thái 0
+                                    textColor = "blue"; // Màu chữ trắng cho màu nền đỏ
+                                    break;
+                                case 1:
+                                    rowClass = "table-info"; // Màu xanh dương cho trạng thái 1
+                                    textColor = "black"; // Màu chữ đen cho màu nền xanh dương
+                                    break;
+                                case 2:
+                                    rowClass = "table-warning"; // Màu vàng cho trạng thái 2
+                                    textColor = "black"; // Màu chữ đen cho màu nền vàng
+                                    break;
+                                case 3:
+                                    rowClass = "table-secondary"; // Màu xanh lá cây cho trạng thái 3
+                                    textColor = "black"; // Màu chữ đen cho màu nền xanh lá cây
+                                    break;
+                                case 4:
+                                    rowClass = "table-info"; // Màu xanh chủ đạo cho trạng thái 4
+                                    textColor = "#000"; // Màu chữ trắng cho màu nền xanh chủ đạo
+                                    break;
+                                case 5:
+                                    rowClass = "table-success"; // Màu xám cho trạng thái 5
+                                    textColor = "#000033"; // Màu chữ đen cho màu nền xám
+                                    break;
+                                default:
+                                    break;
+                            }
+                            <tr class="@rowClass" style="color: @textColor">
+                                <td>@i</td>
+                                <td>@item.MaDH</td>
+                                <td>@item.Ten</td>
+                                <td>@item.Sdt</td>
+                                <td>@item.TongTien</td>
+                                <td>@item.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.Ghichu</td>
+                                <td>@item.PhuongThucThanhToan</td>
+
+                                <td>
+                                    @if (item.TrangThaiDonHang == 1)
+                                    {
+                                        <p>Đơn hàng mới</p>
+                                    }
+                                    else if (item.TrangThaiDonHang == 2)
+                                    {
+                                        <p>Đã xác nhận</p>
+                                    }
+                                    else if (item.TrangThaiDonHang == 3)
+                                    {
+                                        <p>Đang chuẩn bị món ăn</p>
+                                    }
+                                    else if (item.TrangThaiDonHang == 4)
+                                    {
+                                        <p>Đang Giao Hàng</p>
+                                    }
+                                    else if (item.TrangThaiDonHang == 5)
+                                    {
+                                        <p>Giao Hàng Thành Công</p>
+                                    }
+                                    else if (item.TrangThaiDonHang == 0)
+                                    {
+                                        <p>Đơn hàng đã huỷ</p>
+                                    }
+                                </td>
+                                @if (item.NgayHuy.HasValue && (item.TrangThaiDonHang == 0))
+                                {
+                                    <td style="font-weight:700;color:red" width="5%">
+                                        @item.NgayHuy.Value.ToString("dd/MM/yyyy HH:mm")
+                                        <br />
+                                        <p style="color:blue">Đơn huỷ</p>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td width="7%">Không có thông tin huỷ</td>
+                                }
+                                <td>
+                                    <div>
+                                        <select class="status-dropdown custom-select">
+                                            <option value="1">Đơn hàng mới</option>
+                                            <option value="2">Xác nhận đơn hàng</option>
+                                            <option value="3">Đang chuẩn bị món ăn</option>
+                                            <option value="4">Đang vận chuyển đến bạn</option>
+                                            <option value="5">Đã giao hàng</option>
+                                        </select>
+                                        <button class="btn btn-sm btn-warning btnCapNhat" data-id="@item.MaDH">Cập nhật</button>
+                                    </div>
+                                    <a href="/Admin/DonHang/View/@item.MaDH" class="btn btn-sm btn-success">Xem</a>
+                                    <button class="btnHuyDonHang btn btn-sm btn-danger" data-id="@item.MaDH">Huỷ đơn hàng</button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                </tbody>
+
+            </table>
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="pagination-container">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+<script>
+    var buttons = document.getElementsByClassName('btnCapNhat');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào nút
+
+            var container = this.parentNode; // Lấy phần tử cha chứa nút cập nhật
+            var orderId = this.getAttribute('data-id'); // Lấy giá trị của thuộc tính 'data-id'
+            var statusDropdown = container.querySelector('.status-dropdown');
+            var selectedStatus = statusDropdown.value; // Lấy giá trị được chọn trong dropdown list
+
+            // Gửi yêu cầu cập nhật trạng thái đơn hàng bằng Ajax
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/DonHang/UpdateStatus', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('Cập nhật trạng thái đơn hàng thành công');
+                        location.reload(); // Tải lại trang sau khi cập nhật thành công
+                    } else {
+                        alert('Có lỗi xảy ra trong quá trình cập nhật trạng thái đơn hàng');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ orderId: orderId, status: selectedStatus }));
+        });
+    }
+</script>
+
+<script>
+    var cancelButtons = document.getElementsByClassName('btnHuyDonHang');
+    for (var i = 0; i < cancelButtons.length; i++) {
+        cancelButtons[i].addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào nút
+
+            var orderId = this.getAttribute('data-id'); // Lấy giá trị của thuộc tính 'data-id'
+
+            // Gửi yêu cầu huỷ đơn hàng bằng Ajax
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/DonHang/HuyDonHang', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('Huỷ đơn hàng thành công');
+                        location.reload(); // Tải lại trang sau khi huỷ thành công
+                    } else {
+                        alert('Có lỗi xảy ra trong quá trình huỷ đơn hàng');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ orderId: orderId }));
+        });
+    }
+</script>
+<script>
+    document.getElementById('filterButton').addEventListener('click', function () {
+        var selectedStatus = document.getElementById('trangThai').value;
+        var url = '@Url.Action("Index")' + '?trangThai=' + encodeURIComponent(selectedStatus);
+        window.location.href = url;
+    });
+</script>
+
+
+
+
+

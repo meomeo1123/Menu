@@ -1,0 +1,219 @@
+﻿@model IPagedList<tester1.Models.DonHang>
+@using PagedList
+@using PagedList.Mvc
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var controller = ViewContext.Controller as Controller;
+    var userManager = controller.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+    var user = userManager.FindById(User.Identity.GetUserId());
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .order-section,
+    .user-info-section {
+        width: 45%;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .custom-select {
+        appearance: none; /* Loại bỏ giao diện mặc định của trình duyệt */
+        padding: 8px 16px; /* Đặt khoảng cách giữa nội dung và viền */
+        border: 1px solid #ccc; /* Viền */
+        border-radius: 4px; /* Bo góc viền */
+        background-color: #fff; /* Màu nền */
+        font-size: 14px; /* Kích thước chữ */
+        color: #333; /* Màu chữ */
+        cursor: pointer; /* Con trỏ chuột thành dạng bấm */
+    }
+
+        .custom-select:hover {
+            border-color: #888; /* Màu viền khi di chuột vào */
+        }
+
+        .custom-select:focus {
+            outline: none; /* Xóa đường viền khi có focus */
+            box-shadow: 0 0 0 2px #ddd; /* Hiệu ứng shadow khi có focus */
+        }
+
+        /* Thiết lập màu nền cho các mục lựa chọn */
+        .custom-select option {
+            background-color: #fff;
+        }
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination-container .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .pagination-container .pagination li {
+                margin-right: 5px;
+            }
+
+                .pagination-container .pagination li a {
+                    display: inline-block;
+                    padding: 5px 10px;
+                    border: 1px solid #ccc;
+                    background-color: #f5f5f5;
+                    color: #333;
+                    text-decoration: none;
+                }
+
+                    .pagination-container .pagination li a:hover {
+                        background-color: #e9e9e9;
+                    }
+
+            .pagination-container .pagination .active a {
+                background-color: #337ab7;
+                color: #fff;
+            }
+
+            .pagination-container .pagination .disabled a {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+</style>
+<h1 style=" font-size: 28px; margin: 0; text-transform: uppercase; padding: 20px px 0px; font-weight:300;color:35240d;margin:20px 0;">Tài Khoản</h1>
+<div class="container">
+    <div style="width: 68%; margin-right: 10px;" class="order-section">
+        <h2 style="font-size: 23px; margin: 0; text-transform: uppercase; padding: 20px 0px; font-weight: 300; color: #35240d; margin: 20px 0;">Đơn hàng của bạn</h2>
+        @if (!Model.Any())
+        {
+            <p>Không có đơn hàng nào.</p>
+        }
+        else
+        {
+            <div id="orderList" class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="5%">Ngày tạo</th>
+                            <th width="25%">Lời Nhắn</th>
+                            <th width="15%">Phương Thức Thanh Toán</th>
+                            <th width="7%">Tổng Tiền</th>
+                            <th width="15%">Trạng thái đơn hàng hiện tại</th>
+                            <th width="2%">#</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.Ghichu</td>
+                                    <td>@item.PhuongThucThanhToan</td>
+                                    <td width="7%">@item.TongTien</td>
+
+                                    <td>
+                                        @if (item.TrangThaiDonHang == 1)
+                                        {
+                                            <p>Đơn hàng mới</p>
+                                        }
+                                        else if (item.TrangThaiDonHang == 2)
+                                        {
+                                            <p>Đã xác nhận</p>
+                                        }
+                                        else if (item.TrangThaiDonHang == 3)
+                                        {
+                                            <p>Đang chuẩn bị món ăn</p>
+                                        }
+                                        else if (item.TrangThaiDonHang == 4)
+                                        {
+                                            <p>Đang Giao Hàng</p>
+                                        }
+                                        else if (item.TrangThaiDonHang == 5)
+                                        {
+                                            <p>Giao Hàng Thành Công</p>
+                                        }
+                                        else if (item.TrangThaiDonHang == 0)
+                                        {
+                                            <p>Đơn hàng đã huỷ</p>
+                                        }
+                                    </td>
+                                    @if (item.NgayHuy.HasValue && (item.TrangThaiDonHang == 0))
+                                    {
+                                        <td style="font-weight:700;color:red" width="5%">
+                                            @item.NgayHuy.Value.ToString("dd/MM/yyyy HH:mm")
+                                            <br />
+                                            <p style="color:blue">Đơn huỷ</p>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td style="display:none" width="7%">Không có thông tin huỷ</td>
+                                    }
+                                    <td>
+                                        <a style="width:50px;margin-bottom:10px" href="/User/View/@item.MaDH" class="btn btn-sm btn-success">Xem</a> <br />
+                                        <button style="width:73px" class="btnHuyDonHang btn btn-sm btn-danger" data-id="@item.MaDH">Huỷ đơn</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+            </div>
+        }
+    </div>
+
+    <div style="width: 30%;" class="user-info-section">
+        <h2 style="font-size: 20px; margin: 0; text-transform: uppercase; padding: 20px 0px; font-weight: 300; color: #35240d; margin: 20px 0;">Thông tin người dùng</h2>
+        <!-- Thêm thông tin người dùng khác vào đây -->
+        <p><strong>Tên:</strong> @user.Name</p>
+        <p><strong>Email:</strong> @user.Email</p>
+    </div>
+</div>
+<script>
+    var cancelButtons = document.getElementsByClassName('btnHuyDonHang');
+    for (var i = 0; i < cancelButtons.length; i++) {
+        cancelButtons[i].addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định khi click vào nút
+
+            var orderId = this.getAttribute('data-id'); // Lấy giá trị của thuộc tính 'data-id'
+
+            // Gửi yêu cầu huỷ đơn hàng bằng Ajax
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/User/HuyDonHang', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('Huỷ đơn hàng thành công');
+                        location.reload(); // Tải lại trang sau khi huỷ thành công
+                    } else {
+                        alert('Có lỗi xảy ra trong quá trình huỷ đơn hàng');
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({ orderId: orderId }));
+        });
+    }
+</script>
+
+
+</html>

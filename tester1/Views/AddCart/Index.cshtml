@@ -1,0 +1,131 @@
+﻿@model List<tester1.Models.CartItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="~/Scripts/Controllers/cartController.js"></script>
+}
+<style>
+    .section {
+        background: #fff;
+    }
+
+    .table {
+        width: 94%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    td {
+        text-align: center; /* căn giữa ngang */
+        vertical-align: middle !important; /* căn giữa dọc */
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 7px 4px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+    .update-form {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .quantity-input {
+        width: 80px;
+    }
+
+    .update-btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+   
+
+</style>
+<h2 style="padding-top:50px">GIỎ HÀNG CỦA BẠN</h2>
+    <div  style="width: 1200px; position:relative;padding-bottom:150px" class="section group">
+        @if (Model.Count > 0)
+        {
+            <table style="background:#fff;color:#000" class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <td>Tên SP</td>
+                        <td>Ảnh SP</td>
+                        <td>Số lượng</td>
+                        <td>Đơn giá</td>
+                        <td>Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        double total = item.product.GiaBan.Value * item.Quantity;
+                        <tr>
+                            <td>@item.product.TenSP</td>
+                            <td style="width: 20%;">
+                                <img style="width: 100%; object-fit: cover;" src="@Url.Content(item.product.HinhAnh)" height="150" width="150" />
+                            </td>
+                            <td style="width: 15%">
+                                @using (Html.BeginForm("Update_Quantity_Cart", "AddCart", FormMethod.Post, new { @class = "update-form" }))
+                                {
+                                    <div class="input-group">
+                                        <input type="hidden" value="@item.product.MaSP" name="ID_Product" />
+                                        <input type="number" class="form-control quantity-input" value="@item.Quantity" name="Quantity" min="1" max="10" />
+                                        <div class="input-group-append">
+                                            <button style="width: 102px; margin-top: 10px;" type="submit" class="btn btn-primary">
+                                                Cập nhật
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </td>
+                            <td style="text-transform: initial">@String.Format("{0:#,###}", item.product.GiaBan)đ</td>
+                            <td style="width: 15%">
+                                @String.Format("{0:#,###}", total) <strong style="text-decoration-line: underline; margin-left: -2px; text-transform: initial;">đ</strong>
+                            </td>
+                            <td><a href="#" data-id="@item.product.MaSP" class="btn-delete">Xoá</a></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Tổng tiền:</td>
+                        <td style="text-transform: initial" colspan="3">@string.Format("{0:N0}", Model.Sum(item => item.product.GiaBan * item.Quantity)) đ</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <button id="btnContinue" class="btn btn-primary">Tiếp tục mua hàng</button>
+            <button id="btnDeleteAll" class="btn btn-danger">Xoá giỏ hàng</button>
+            <button id="btnPayment1" class="btn btn-success">Thanh toán</button>
+
+        }
+        else
+        {
+            <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
+        }
+
+    </div>
+

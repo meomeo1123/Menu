@@ -1,0 +1,22 @@
+*{
+    box-sizing: inherit;
+
+}
+html{
+    font-size: 62.5%;
+    /* 1rem = 10px */
+    line-height: 1.6rem;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    scroll-behavior: smooth;
+
+}
+:root{
+    --header: #1dc485;
+    --footer : #262626;
+
+}
+ul,li,h1,h2,h3,h4{
+    margin: 0;
+    padding: 0;
+}

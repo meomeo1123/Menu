@@ -1,0 +1,231 @@
+﻿    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="~/Content/css/base.css" rel="stylesheet" />
+        <link href="~/Content/css/grid.css" rel="stylesheet" />
+        <link href="~/Content/css/style.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="~/Content/cssChitiet/assets/fonts/themify-icons/themify-icons.css" rel="stylesheet" />
+        <link href="~/Content/css/footer.css" rel="stylesheet" />
+        @RenderSection("css", required: false)
+        <title>Document</title>
+        <style>
+            #content {
+                height: fit-content;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="auto-slidershow">
+            <div class="w3-content w3-section">
+                <img class="mySlides" src="~/Content/img/silder4.jpg">
+                <img class="mySlides" src="~/Content/img/1f.jpg">
+                <img class="mySlides" src="~/Content/img/2.jpg">
+            </div>
+        </div>
+        <div id="main">
+            @Html.Partial("_NavLogin")
+            <div id="header">
+                <a href="" class="title-shop">Fresh Shop</a>
+                <p class="note-shop">Quán Ăn Ngon , Nhanh , Giá cả hợp lí</p>
+                <form class="search" action="@Url.Action("Index","Home")" method="get">
+                    <input type="text" placeholder="Từ Khoá tìm kiếm" class="form-control" name="SearchString" />
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <div id="content">
+                <div class="grid wide">
+                    @RenderSection("cart", required: false)
+                    @{Html.RenderAction("_Navbar", "Home");}
+                    @RenderBody()
+                    @RenderSection("category", required: false)
+                </div>
+            </div>
+            <div>
+                <!-- Messenger Chat Plugin Code -->
+                <div id="fb-root"></div>
+
+                <!-- Your Chat Plugin code -->
+                <div id="fb-customer-chat" class="fb-customerchat">
+                </div>
+
+                <script>
+                    var chatbox = document.getElementById('fb-customer-chat');
+                    chatbox.setAttribute("page_id", "146324051890497");
+                    chatbox.setAttribute("attribution", "biz_inbox");
+                </script>
+
+                <!-- Your SDK code -->
+                <script>
+                    window.fbAsyncInit = function () {
+                        FB.init({
+                            xfbml: true,
+                            version: 'v18.0'
+                        });
+                    };
+
+                    (function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+                </script>
+            </div>
+            <!-- footer-->
+            <footer style="margin-top: -16px;" id="footer">
+                <div class="footer-top">
+                    <div class="footer-container">
+                        <div class="footer-content">
+                            <div class="col col-third email-section">
+                                <div class="text-color email">
+                                    <form action="#">
+                                        <h4 class="email-text1">Đăng ký nhận email</h4>
+                                        <p class="email-text2">Cung cấp email của bạn để nhận được tin nhắn khuyên mại của chúng tôi</p>
+                                        <input class="email-input" type="email" placeholder="Email của bạn">
+                                        <button class="email-button">
+                                            <span>Đăng ký</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col col-third footer-logo">
+                                <div class="text-color logo">
+                                    <img src="https://bizweb.dktcdn.net/100/053/074/themes/67956/assets/logo-footer.png?1564585298508" alt="logo" class="logo-image">
+                                </div>
+                            </div>
+                            <div class="col col-third contact-section">
+                                <div class="text-color contact1">
+                                    <h4 class="contact-texth4">Địa chỉ liên hệ</h4>
+                                    <p class="contact-text1">Đ/C: Tòa nhà Ladeco, Đội Cấn, Ba Đình, Hà Nội</p>
+                                    <p class="contact-text1">Điện thoại: +84 963.647.129</p>
+                                    <p class="contact-text1">Email: vtquy291991@gmail.com</p>
+                                    <p class="contact-text1">website: wwww.lvteam.com</p>
+                                    <div class="contact-social">
+                                        <a href="#">
+                                            <i class="ti-linkedin"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ti-pinterest"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ti-facebook"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ti-skype"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="ti-twitter"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="border-line"></div>
+                    <div class="footer-credist">
+                        <span class="credist-text">© Bản quyền thuộc về <a href="#">LVTeam</a> | Cung cấp bởi <a href="https://www.sapo.vn/?utm_campaign=cpn%3Asite_khach_hang-plm%3Afooter&utm_source=site_khach_hang&utm_medium=referral&utm_content=fm%3Atext_link-km%3A-sz%3A&utm_term=&campaign=site_khach_hang">Sapo</a></span>
+                    </div>
+                </div>
+
+            </footer>
+
+        </div>
+
+
+
+
+
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("Scripts", required: false)
+        @RenderSection("scrip", required: false)
+        @RenderSection("upload", required: false)
+        <script>
+            var myIndex = 0;
+            carousel();
+
+            function carousel() {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                myIndex++;
+                if (myIndex > x.length) { myIndex = 1 }
+                x[myIndex - 1].style.display = "block";
+                setTimeout(carousel, 2000); // Change image every 2 seconds
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                var currentUrl = window.location.pathname; // Lấy đường dẫn hiện tại
+
+                if (currentUrl === '/Home/Index') {
+                    $('li[data-page="home"]').addClass('active'); // Thêm class "active" vào thẻ li có data-page="home"
+                }
+
+                // Lặp qua các liên kết danh mục
+                $('.category-link').each(function () {
+                    var href = $(this).attr('href');
+                    if (currentUrl.includes(href)) {
+                        $(this).addClass('active'); // Thêm class "active" vào liên kết danh mục tương ứng với đường dẫn hiện tại
+                    }
+                });
+
+                // Lặp qua các liên kết sản phẩm
+                $('.product-link').each(function () {
+                    var href = $(this).attr('href');
+                    if (currentUrl.includes(href)) {
+                        $(this).addClass('active'); // Thêm class "active" vào liên kết sản phẩm tương ứng với đường dẫn hiện tại
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                var currentUrl = window.location.pathname; // Lấy đường dẫn hiện tại
+
+                // Lặp qua các liên kết danh mục
+                $('.category-link').each(function () {
+                    var href = $(this).attr('href');
+                    if (currentUrl.includes(href)) {
+                        $(this).addClass('active'); // Thêm class "active" vào liên kết danh mục tương ứng với đường dẫn hiện tại
+                    }
+                });
+            });
+        </script>
+        <script>
+            var mainDiv = document.getElementById('main');
+            var autoSlideshowDiv = document.querySelector('.auto-slideshow');
+
+            mainDiv.addEventListener('scroll', function (event) {
+                var scrollPosition = mainDiv.scrollHeight - mainDiv.clientHeight;
+
+                if (mainDiv.scrollTop >= scrollPosition) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    autoSlideshowDiv.style.overflow = 'hidden';
+                } else {
+                    autoSlideshowDiv.style.overflow = 'auto';
+                }
+            });
+
+
+        </script>
+
+
+
+    </body>
+</html>

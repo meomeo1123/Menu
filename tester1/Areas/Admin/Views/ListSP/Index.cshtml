@@ -1,0 +1,164 @@
+﻿@model IEnumerable<tester1.Models.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .btn-toggle {
+        position: relative;
+        display: inline-block;
+        width: 3rem;
+        height: 1.5rem;
+    }
+
+        .btn-toggle .handle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+            transition: left 0.3s;
+        }
+
+        .btn-toggle:active .handle {
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-toggle[aria-pressed="true"] .handle {
+            left: calc(100% - 1.5rem);
+        }
+</style>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+
+        <div class="card-body">
+            <p style="color : #000" class="btn btn-link">
+                <button class="btn-icon-split btn btn-success" type="button" onclick="location.href='@Url.Action("Create", "ListSP")'">
+                    <span class="icon text-white">
+                        <span style="padding : 0" class="text">
+                            Tạo 
+                        </span>
+                    </span>
+                </button>
+            </p>
+            @if (ViewBag.Categories != null)
+            {
+                <select id="categoryId">
+                    <option value="0">-- All --</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.MaDM">@category.TenDM</option>
+                    }
+                </select>
+            }
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên Món</th>
+                            <th>Danh Mục</th>
+                            <th>Hình</th>
+                            <th>Giá Nhập</th>
+                            <th>Giá Bán</th>
+                            <th>Mô tả</th>
+                            <th>Trạng Thái</th>
+                            <th width="10%">Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Tên Món</th>
+                            <th>Danh Mục</th>
+                            <th>Hình</th>
+                            <th>Giá Nhập</th>
+                            <th>Giá Bán</th>
+                            <th>Mô tả</th>
+                            <th>Trạng Thái</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr data-category="@item.MaDM">
+                            <td>@item.TenSP</td>
+                            <td>@item.TenDM</td>
+                            <td><img src="@item.Hinh" alt="Alternate Text" style="width:200px;height:200px;object-fit:cover" /></td>
+                            <td>@string.Format("{0:#,#}", item.GiaNhap)</td>
+                            <td>@string.Format("{0:#,#}", item.GiaBan)</td>
+                            <td>@item.MoTa</td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                <button class="btn-icon-split btn btn-warning" type="button" onclick="location.href='@Url.Action("Edit", "ListSP", new { id = item.MaSP })'">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span style="padding : 0" class="text">
+                                            Sửa
+                                        </span>
+                                    </span>
+                                </button>
+                                <button class="btn-icon-split btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "ListSP", new { id = item.MaSP })'">
+                                    <span class="icon text-white">
+                                        <i class="fas fa-trash"></i>
+                                        <span style="padding : 0" class="text">
+                                            Xoá
+                                        </span>
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("#categoryId").on("change", function () {
+            var categoryId = $(this).val();
+            if (categoryId == "0") {
+                // Show all products
+                $("table tbody tr").show();
+            } else {
+                // Show only products with selected category
+                $("table tbody tr").hide();
+                if (categoryId != null) {
+                    $("table tbody tr[data-category='" + categoryId + "']").show();
+                }
+            }
+        });
+    });
+    $('input[type="checkbox"]').click(function () {
+        var id = $(this).data('MaSP');
+        var url = $(this).data('url');
+        var trangThai = $(this).prop('checked') ? 1 : 0; // Nếu checkbox được chọn, trạng thái = 1, ngược lại trạng thái = 0
+
+        $.ajax({
+            url: url,
+            data: { id: id, trangThai: trangThai },
+            type: "POST",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                console.log("Error");
+            }
+        });
+    });
+</script>

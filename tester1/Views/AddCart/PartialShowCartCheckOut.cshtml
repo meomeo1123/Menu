@@ -1,0 +1,57 @@
+﻿@model tester1.Models.Cart
+@{
+    ViewBag.Title = "ShowToCart";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .table {
+        width: 94%;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    td {
+        text-align: center; /* căn giữa ngang */
+        vertical-align: middle !important; /* căn giữa dọc */
+    }
+</style>
+<h2>ShowToCart</h2>
+@if (Model != null)
+{
+    <table class="table table-bordered">
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                double total = item._shopping_product.GiaBan.Value * item._shopping_quantity;
+            <tr>
+                <td style="width: 20%;">
+                    <img style="width: 100%; object-fit: cover;" src="@Url.Content(item._shopping_product.HinhAnh)" height="150" width="150" />
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item._shopping_product.TenSP)
+                </td>
+                <td style="width:15%">
+                    @String.Format("{0:#,###}", @item._shopping_product.GiaBan) <strong style="text-decoration-line: underline; margin-left: -2px; ">đ</strong>
+                </td>
+                <td style="width:15%">
+                    @using (Html.BeginForm("Update_Quantity_Cart", "AddCart"))
+                    {
+                        <input type="hidden" value="@item._shopping_product.MaSP" name="ID_Product" />
+                        <input style=" width: 30%;" type="number" value="@item._shopping_quantity" name="Quantity" />
+                        <button type="submit">Update</button>
+                    }
+                </td>
+                <td style="width:15%">
+                    @String.Format("{0:#,###}", total) <strong style="text-decoration-line: underline; margin-left: -2px; ">đ</strong>
+                </td>
+                <td style="width: 10%">
+                    <a href="/AddCart/RemoveCart/@item._shopping_product.MaSP">Xoá</a>
+                </td>
+                <input type="hidden" name="ProductId" value="@item._shopping_product.MaSP" />
+            </tr>
+            }
+        </tbody>
+    </table>
+    <a href="@Url.Action("Index","Home")">back</a>
+    <a href="/AddCart/CheckOut">Thanh Toán</a>
+}

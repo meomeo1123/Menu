@@ -1,0 +1,52 @@
+﻿@model IEnumerable<tester1.Models.DanhMuc>
+
+@{
+    ViewBag.Title = "DanhMuc";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên Danh Mục</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenDM</td>
+                <td>
+                    <button class="btn-icon-split btn btn-warning" type="button" onclick="location.href='@Url.Action("Edit", "DanhMuc", new { id = item.MaDM })'">
+                        <span class="icon text-white">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span style="padding : 0" class="text">
+                                Edit
+                            </span>
+                        </span>
+                    </button>
+
+                    <button class="btn-icon-split btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "DanhMuc", new { id = item.MaDM })'">
+                        <span class="icon text-white">
+                            <i class="fas fa-trash"></i>
+                            <span style="padding : 0" class="text">
+                                Delete
+                            </span>
+                        </span>
+                    </button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+    <p style="color : #000" class="btn btn-link">
+        <button class="btn-icon-split btn btn-success" type="button" onclick="location.href='@Url.Action("Create", "DanhMuc")'">
+            <span class="icon text-white">
+                <span style="padding : 0" class="text">
+                    Create
+                </span>
+            </span>
+        </button>
+    </p>
+
+</table>

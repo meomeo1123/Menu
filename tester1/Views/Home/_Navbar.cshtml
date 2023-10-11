@@ -1,0 +1,41 @@
+﻿@using tester1.Models
+@{
+    var categories = ViewBag.Categories as List<DanhMuc>;
+}
+
+
+<ul class="_nav">
+    <li data-page="home">
+        <a class="item-nav" href="/Home/Index">
+            Trang chủ
+        </a>
+    </li>
+    <li class="@((ViewContext.RouteData.Values["action"].ToString() == "GioiThieu") ? "active" : "")">
+        <a class="item-nav" href="">
+            Giới thiệu
+        </a>
+    </li>
+    <li data-page="category">
+        <a class="item-nav" href="#">
+            Sản Phẩm <i class="fa-solid fa-chevron-down"></i>
+        </a>
+        <ul class="_subnav">
+            @if (categories != null && categories.Any())
+            {
+                <ul>
+                    @foreach (var category in categories)
+                    {
+                        <li>
+                            @Html.ActionLink(category.TenDM, "ProductCategory", "Home", new { @Id = category.MaDM }, new { @class = "category-link" })
+                        </li>
+                    }
+                </ul>
+            }
+        </ul>
+    </li>
+    <li class="@((string)ViewBag.ActivePage == "Liên hệ" ? "active" : "")">
+        <a class="item-nav" href="">
+            Liên hệ
+        </a>
+    </li>
+</ul>

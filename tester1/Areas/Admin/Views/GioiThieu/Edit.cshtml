@@ -1,0 +1,87 @@
+﻿@model tester1.Models.GioiThieu
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>GioiThieu</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdGT)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TieuDe, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TieuDe, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TieuDe, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control", id = "inputND" })
+                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NgayDang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.NgayDang, new { id = "NgayDangHidden" })
+                <input class="form-control" type="text" id="NgayDang" readonly>
+                @Html.ValidationMessageFor(model => model.NgayDang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <script>
+            flatpickr("#NgayDang", {
+                dateFormat: "d/m/Y",
+                allowInput: true,
+                onChange: function (selectedDates, dateStr, instance) {
+                    var hiddenField = document.getElementById("NgayDangHidden");
+                    hiddenField.value = instance.selectedDates[0].toISOString();
+                }
+            });
+        </script>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <div>
+        <button class="btn-icon-split btn btn-secondary" type="button" onclick="location.href='@Url.Action("GioiThieu", "GioiThieu")'">
+            <span class="icon text-white">
+                <i class="fas fa-arrow-right"></i>
+                <span style="padding : 0" class="text">
+                     Trở về
+                </span>
+            </span>
+        </button>
+
+    </div>
+
+</div>
+
+
+
+@section DoanJS{
+    <script>
+        CKEDITOR.replace('inputND')
+    </script>
+
+}

@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "FilteredRevenueStatistics2";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Biểu đồ doanh thu hàng ngày (Filtered)</h2>
+<div>
+    <form id="searchForm" method="post" action="/Admin/ThongKe/FilteredRevenueStatistics2">
+        <label for="fromDate">Từ ngày:</label>
+        <input type="date" id="fromDate" name="fromDate" value="@ViewBag.FromDate">
+
+        <label for="toDate">Đến ngày:</label>
+        <input type="date" id="toDate" name="toDate" value="@ViewBag.ToDate">
+
+        <button type="submit">Lọc</button>
+    </form>
+</div>
+
+<div style="height:1000px;">
+    <canvas id="revenueChart" width="400" height="200"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Xử lý sự kiện submit form
+    document.getElementById('searchForm').addEventListener('submit', function (e) {
+        // ...
+    });
+
+    // Hàm cập nhật biểu đồ
+    function updateChart(dates, revenues, costs, profits) {
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Doanh thu',
+                        data: revenues,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Chi phí',
+                        data: costs,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Lợi nhuận',
+                        data: profits,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Cập nhật biểu đồ mặc định khi tải trang
+    updateChart(@Html.Raw(Json.Encode(ViewBag.Dates)), @Html.Raw(Json.Encode(ViewBag.Revenues)), @Html.Raw(Json.Encode(ViewBag.Costs)), @Html.Raw(Json.Encode(ViewBag.Profits)));
+</script>
+
+

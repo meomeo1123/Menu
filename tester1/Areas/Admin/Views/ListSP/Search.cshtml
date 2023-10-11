@@ -1,0 +1,18 @@
+﻿@model IEnumerable<tester1.Models.SanPham>
+@using tester1.Models
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+<tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TenSP</td>
+            <td>@item.GiaBan</td>
+            <td>@item.MoTa</td>
+        </tr>
+    }
+</tbody>

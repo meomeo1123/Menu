@@ -1,0 +1,91 @@
+﻿@model IEnumerable<tester1.Models.GioiThieu>
+
+@{
+    ViewBag.Title = "GioiThieu";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GioiThieu</h2>
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .table-container {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    </style>
+<body>
+    <p style="color : #000" class="btn btn-link">
+        <button class="btn-icon-split btn btn-success" type="button" onclick="location.href='@Url.Action("Create", "GioiThieu")'">
+            <span class="icon text-white">
+                <span style="padding : 0" class="text">
+                    Tạo mới
+                </span>
+            </span>
+        </button>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Tiêu đề</th>
+                <th>Nội dung</th>
+                <th>Ngày Đăng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.TieuDe
+                    </td>
+                    <td class="table-container">
+                        @Html.Raw(item.NoiDung)
+                    </td>
+                    <td>
+                        @item.NgayDang
+                    </td>
+                    <td>
+                        <button class="btn-icon-split btn btn-warning" type="button" onclick="location.href='@Url.Action("Edit", "GioiThieu", new { id = item.IdGT })'">
+                            <span class="icon text-white">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span style="padding : 0" class="text">
+                                    Sửa
+                                </span>
+                            </span>
+                        </button>
+                        <button class="btn-icon-split btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "GioiThieu", new { id = item.IdGT })'">
+                            <span class="icon text-white">
+                                <i class="fas fa-trash"></i>
+                                <span style="padding : 0" class="text">
+                                    Xoá
+                                </span>
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+
+        <!-- Thêm các dòng khác tùy theo nhu cầu -->
+    </table>
+</body>

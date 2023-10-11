@@ -1,0 +1,169 @@
+﻿@model IEnumerable<tester1.Models.SanPham>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActivePage = "Index";
+}
+<!--
+
+<div class="product-top">
+    <div class="product-new">
+        <img src="~/Content/img/pro-top.jpg" alt="">
+        <div class="star star-top">
+            Mới! <i class="fa-solid fa-star"></i>
+        </div>
+    </div>
+    <div class="selling-product">
+        <div class="product-title">
+            <h1>Sản phẩm bán chạy</h1>
+            <p>Chúng tôi hài lòng khi mang đến cho Quý khách hàng những sản phẩm chất lượng với mức giá ưu đãi nhất thị trường.</p>
+        </div>
+        <swiper-container class="mySwiper" pagination="true" pagination-clickable="true" navigation="true" space-between="30" loop="true">
+            <swiper-slide>
+                <a href="">
+                    <img src="~/Content/img/cachuabi.jpg" alt="">
+                </a>
+            </swiper-slide>
+            <swiper-slide>
+                <a href="">
+                    <img src="~/Content/img/chuoi.jpg" alt="">
+                </a>
+            </swiper-slide>
+
+        </swiper-container>
+    </div>
+
+</div>
+    -->
+<!-- banner top -->
+<div class="banner-top">
+    <div class="banner-left">
+        <a href="">
+            <img src="~/Content/img/banner_left.jpg" alt="">
+        </a>
+    </div>
+
+    <div class="banner-right">
+        <a href="">
+            <img src="~/Content/img/bannner1.jpg" alt="">
+        </a>
+    </div>
+</div>
+
+
+
+<!-- product-container -->
+<div class="row  product-container">
+    <div style="max-width: 70%;" class="col l-9">
+        <div class="contact">
+            <div class="phone">
+                <i class="fa-solid fa-phone"></i>
+                <div class="phone-title">
+                    <h3>Đặt hàng nhanh</h3>
+                    <strong>0372374312</strong>
+                </div>
+            </div>
+            <div class="option">
+                <p>Bạn chọn 1 trong 2 cách để bạn mua hàng</p>
+                <div class="service">
+                    <i class="fa-sharp fa-solid fa-arrow-left"></i>
+                    <strong>Hoặc</strong>
+                    <i class="fa-sharp fa-solid fa-arrow-right"></i>
+                </div>
+
+            </div>
+            <div class="cart">
+                <div style="text-align: right;">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    <div class="title-cart">
+                        <p>Giỏ hàng</p>
+                        <strong>@Html.Action("BagCart", "AddCart") sản phẩm</strong>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        @if (Model.Any())
+        {
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div style="max-width: 30.33333%;" class="col l-4 item">
+                        <div class="section-product">
+                            <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
+                                <img height="256" style="object-fit:contain" class="img-product" src="@item.HinhAnh" alt="">
+                            </a>
+                            <div class="title-product">
+                                <h1>
+                                    @item.TenSP
+                                </h1>
+                                <p>
+                                    <small>Giá:</small>
+                                    @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                                </p>
+
+                                <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
+                                    <span>
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        Mua Hàng
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        }
+        else
+        {
+            <p style="text-align: center; font-size: 20px; line-height: 20px; margin-left: -25px; margin-top: 85px;">Không có sản phẩm nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+        }
+    </div>
+
+    <!-- sidebar -->
+    @Html.Partial("Sidebar");
+</div>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .swal2-popup {
+            font-size: 1.4rem !important;
+        }
+    </style>
+    <script>
+        function addToCart(productId) {
+            // Gửi yêu cầu thêm sản phẩm vào giỏ hàng bằng AJAX
+            $.ajax({
+                url: '/AddCart/AddItem',
+                type: 'GET',
+                data: { productId: productId, quantity: 1 },
+                success: function (response) {
+                    // Hiển thị thông báo thành công bằng SweetAlert2
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công',
+                        text: 'Sản phẩm đã được thêm vào giỏ hàng',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        // Làm mới trang sau khi nhấp OK
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function () {
+                    // Xử lý lỗi nếu có bằng SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Đã xảy ra lỗi. Vui lòng thử lại sau',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+    </script>
+}

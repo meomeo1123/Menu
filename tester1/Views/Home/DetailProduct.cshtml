@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "DetailProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/cssChitiet/style.css" rel="stylesheet" />
+<style>
+    #content {
+        background: #fff;
+        height: fit-content;
+    }
+    #home-main {
+        font-size:20px;
+    }
+    p {
+        margin-bottom:15px;
+    }
+    ul, li, h1, h2, h3, h4 {
+        margin: 0px 0;
+        padding: 0;
+    }
+    #home-main #breadcrumbs{
+        padding-top:0;
+    }
+    #wrapper .content{
+        width:auto;
+    }
+    .Container-detail p{
+        font-size:16px;
+        line-height:18px;
+        
+    }
+    .Container-detail h2, .Container-detail ul, .Container-detail h1, .Container-detail h3, .Container-detail h4, .Container-detail h5 {
+        margin: 15px 0;
+        padding: 0;
+        line-height: 20px;
+    }
+    #breadcrumbs .breadcrumbs-container{
+        width:auto;
+    }
+</style>
+<section id="home-main">
+    <div id="breadcrumbs">
+        <div class="breadcrumbs-container">
+            <ul>
+                <li class="/Home/Index">Trang chủ </li>
+                <span>//</span>
+                <li class="category">@Model.TenSP</li>
+            </ul>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="content">
+            <div class="main">
+                <div class="col image-section">
+                    <div class="main-container">
+                        <div class="main-image js-container">
+                            <img class="main-img js-img" src="@Model.HinhAnh" alt="m-img">
+
+                        </div>
+                        <div style="margin-top:30px" class="Container-detail1">
+                            <h1 style="font-size:20px; font-weight:600; margin-bottom:15px">Mô tả </h1>
+                            <p style="font-size:16px; line-height:21px; letter-spacing:.3px" class="product-info1">
+                                @Html.Raw(Model.MoTa)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col info-section">
+                    <h1 class="info-text">@Model.TenSP</h1>
+                    <p>
+                        <small>Giá:</small>
+                        @string.Format("{0:#,##0}",Model.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                    </p>
+                    <div class="btn btn-product" onclick="addToCart(@Model.MaSP)">
+                        <span>
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Mua Hàng
+                        </span>
+                    </div>
+                    <div class="Container-detail">
+                        <p class="product-info">
+                            @Html.Raw(Model.NoiDung)
+                        </p>
+                    </div>
+                 
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</section>
+
+<script>
+    const container = document.querySelector('.js-container');
+    const image = document.querySelector('.js-container .js-img');
+
+    container.addEventListener('mousemove', function (event) {
+        const containerRect = container.getBoundingClientRect();
+        const x = (event.clientX - containerRect.left) / containerRect.width;
+        const y = (event.clientY - containerRect.top) / containerRect.height;
+
+        const translateX = (x - 0.5) * 40; // Điều chỉnh giá trị di chuyển theo chiều ngang
+        const translateY = (y - 0.5) * 40; // Điều chỉnh giá trị di chuyển theo chiều dọc
+
+        image.style.transform = `scale(1.2) translate(${translateX}px, ${translateY}px)`;
+    });
+
+    container.addEventListener('mouseleave', function () {
+        image.style.transform = 'scale(1)';
+    });
+
+</script>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .swal2-popup {
+            font-size: 1.4rem !important;
+        }
+    </style>
+    <script>
+        function addToCart(productId) {
+            // Gửi yêu cầu thêm sản phẩm vào giỏ hàng bằng AJAX
+            $.ajax({
+                url: '/AddCart/AddItem',
+                type: 'GET',
+                data: { productId: productId, quantity: 1 },
+                success: function (response) {
+                    // Hiển thị thông báo thành công bằng SweetAlert2
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công',
+                        text: 'Sản phẩm đã được thêm vào giỏ hàng',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        // Làm mới trang sau khi nhấp OK
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function () {
+                    // Xử lý lỗi nếu có bằng SweetAlert2
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Đã xảy ra lỗi. Vui lòng thử lại sau',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,51 @@
+﻿@model List<tester1.Models.DonHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thống kê đơn hàng</h2>
+
+<div>
+    <form id="searchForm" method="post" action="/Admin/ThongKe/FilteredOrders">
+        <label for="fromDate">Từ ngày:</label>
+        <input type="date" id="fromDate" name="fromDate" value="@ViewBag.FromDate">
+        <label for="toDate">Đến ngày:</label>
+        <input type="date" id="toDate" name="toDate" value="@ViewBag.ToDate">
+        <button type="submit">Lọc</button>
+    </form>
+</div>
+
+<div style="width:1000px; height:550px">
+    <canvas id="barChart" width="1000" height="550"></canvas>
+
+</div>
+<script>
+        var dates = @Html.Raw(Json.Encode(ViewBag.Dates));
+        var quantities = @Html.Raw(Json.Encode(ViewBag.Quantities));
+
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Số lượng đơn hàng',
+                    data: quantities,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }
+            }
+        });
+</script>

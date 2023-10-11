@@ -1,0 +1,36 @@
+﻿@model IEnumerable<tester1.Models.ChiTietDonHang>
+
+@if (Model != null && Model.Count() > 0)
+{
+    int i = 1;
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="20%">Tên sản phẩm</th>
+                <th width="15%">Hình ảnh</th>
+                <th>Giá</th>
+                <th width="10%">Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.SanPham.TenSP</td>
+                    <td><img src="@item.SanPham.HinhAnh" alt="Alternate Text" style="width:120px;height:120px;object-fit:cover" /></td>
+                    <td>@item.GiaBan.Value.ToString("N0")</td>
+                    <td>@item.SoLuong</td>
+                    <td>@tester1.Common.Common.FormatNumber((item.GiaBan * item.SoLuong), 0)</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không có chi tiết đơn hàng nào.</p>
+}

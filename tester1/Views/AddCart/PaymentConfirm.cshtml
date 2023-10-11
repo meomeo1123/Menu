@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "PaymentConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Message == "success")
+{
+    <h2>Thanh toán thành công</h2>
+    <p>Cảm ơn bạn đã thanh toán thành công.</p>
+}
+else if (ViewBag.Message == "failure")
+{
+    <h2>Thanh toán thất bại</h2>
+    <p>Xin lỗi, thanh toán của bạn không thành công.</p>
+}
+else
+{
+    <h2>Lỗi xảy ra</h2>
+    <p>Có lỗi xảy ra trong quá trình xử lý.</p>
+}
+

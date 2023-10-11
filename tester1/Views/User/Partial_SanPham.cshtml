@@ -1,0 +1,60 @@
+﻿@model IEnumerable<tester1.Models.ChiTietDonHang>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<style>
+    #content {
+        background: #fff;
+        height: 100%;
+    }
+
+    .product-table {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+        .product-table th {
+            text-align: center;
+        }
+
+        .product-table th,
+        .product-table td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+    .product-image {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+    }
+</style>
+
+@if (Model != null && Model.Any())
+{
+    int i = 1;
+    <table class="table table-bordered product-table">
+        <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th width="25%">Tên sản phẩm</th>
+                <th width="15%">Hình ảnh</th>
+                <th>Giá</th>
+                <th width="10%">Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.SanPham.TenSP</td>
+                    <td><img src="@item.SanPham.HinhAnh" alt="Alternate Text" class="product-image" /></td>
+                    <td>@item.GiaBan.Value.ToString("N0")</td>
+                    <td>@item.SoLuong</td>
+                    <td>@tester1.Common.Common.FormatNumber((item.GiaBan * item.SoLuong), 0)</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}

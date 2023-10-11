@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.footer-content .clear {
+    clear: both;
+}
+
+.col {
+    float: left;
+    /*padding-left: 8px;
+    padding-right: 8px;*/
+}
+
+.col-third {
+    width: 33.33333%;
+}
+
+.text-color {
+    color: rgb(136, 136, 136);
+}
+
+#footer {
+    font-size: 14px;
+    line-height: 25px;
+    color: rgba(255, 255, 255, 0.4);
+    background-color: #262626;
+}
+
+#footer .footer-top {
+    /*margin-top: 60px;
+    padding-bottom: 20px;*/
+    box-sizing: border-box;
+}
+
+.footer-top .footer-container {
+    padding: 1px 16px;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-container .footer-content {
+    margin: 32px 0;
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+.footer-content .email-section {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.email .email-text1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #888;
+    line-height: 35px;
+    margin: 0px;
+}
+
+.email .email-text2 {
+    font-size: 14px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.email .email-input {
+    border: 1px solid #434343;
+    padding: 8px 15px;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.email .email-button {
+    border: none;
+    background-color: #363636;
+    padding: 6px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #888;
+}
+
+.footer-content .footer-logo {
+    text-align: center;
+}
+
+.footer-content .contact-section {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.contact-section .contact-texth4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #888;
+    margin: 0px;
+    line-height: 35px;
+    text-align: right;
+}
+
+.contact-section .contact-text1 {
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.contact1 .contact-social {
+    text-align: right;
+}
+
+.contact-social a {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 18px;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+.contact-social a:hover {
+    color: #fff;
+}
+
+.footer-top .border-line {
+    width: 800px;
+    color: rgba(255, 255, 255, 0.4);
+    border-top: 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+.footer-top .footer-credist {
+    width: 800px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    height: 60px;
+}
+
+.footer-credist .credist-text {
+    line-height: 25px;
+    display: block;
+}
+
+.footer-credist a {
+    text-decoration: none;
+    color: #888;
+}

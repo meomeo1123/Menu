@@ -1,0 +1,49 @@
+﻿@model List<tester1.Models.DailyRevenueSummary>
+
+@{
+    ViewBag.Title = "Daily Revenue Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    double? loiNhuan = Model.DoanhThu - Model.ChiPhi;
+}
+
+<h2>Biểu đồ doanh thu hàng ngày</h2>
+
+@foreach (var dailyRevenueSummary in Model)
+{
+    <h3>Ngày: @dailyRevenueSummary.Date.ToString("dd/MM/yyyy")</h3>
+    <div>
+        <canvas id="revenueChart_@dailyRevenueSummary.Date.ToString("yyyyMMdd")" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('revenueChart_@dailyRevenueSummary.Date.ToString("yyyyMMdd")').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Doanh thu', 'Chi phí', 'Lợi nhuận'],
+                datasets: [{
+                    label: 'Thống kê',
+                    data: [@dailyRevenueSummary.DoanhThu, @dailyRevenueSummary.ChiPhi, @dailyRevenueSummary.LoiNhuan],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

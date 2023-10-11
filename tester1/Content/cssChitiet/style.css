@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#wrapper .clear {
+    clear: both;
+}
+
+.col {
+    float: left;
+}
+
+.col-half {
+    width: 50%;
+}
+
+/* Thanh breadcrumbs: */
+
+#home-main #breadcrumbs {
+    padding-top: 100px;
+}
+
+#breadcrumbs .breadcrumbs-container {
+    width: 970px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.breadcrumbs-container ul li {
+    display: inline-block;
+    font-style: italic;
+    list-style-type: none;
+}
+
+.breadcrumbs-container ul li span {
+    padding: 0 15px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.breadcrumbs-container .home {
+    color: #35240d;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.breadcrumbs-container .category {
+    font-size: 14px;
+    color: #1dc483;
+    font-weight: 500;
+}
+
+/* Khuôn: */
+
+#wrapper .content {
+    min-width: 992px;
+    width: 970px;
+    padding: 0 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content .main {
+    margin: 40px -15px;
+}
+
+/* Phần hình: */
+
+.main .image-section {
+    width: 41.66666667%;
+    padding: 0 15px;
+}
+
+.main-container .main-image {
+    border: 1px solid #eeeeee;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.main-image .main-img {
+    width: 100%;
+}
+
+.main-image .main-img:hover {
+    transform: scale(1.2);
+}
+
+
+/* Phần mô tả: */
+
+.main .info-section {
+    width: 58.33333333%;
+    padding: 0 15px;
+}
+
+.info-section .info-text {
+    color: #312519;
+    font-size: 24px;
+    text-transform: uppercase;
+    margin: 0px;
+    line-height: 50px;
+    font-weight: 700;
+}
+
+.info-section .info-price .price {
+    color: #312519;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.info-section .info-price .compare-price {
+    color: #cdcdcd;
+    font-size: 20px;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.buy-wrapper .buy-info {
+    margin-bottom: 20px;
+}
+
+
+.buy-info .buy-quantity {
+    padding-right: 15px;
+}
+
+.buy-quantity .buy-text {
+    line-height: 30px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.buy-quantity .quantity-input {
+    width: 100%;
+    border-radius: 0px;
+    text-indent: 15px;
+    background-color: #fbfbfb;
+    float: left;
+    margin: 0px;
+    margin-right: 0px;
+    padding: 12px 10px;
+    border: solid 1px #dedede;
+}
+
+.buy-info .buy-type {
+    padding-left: 15px;
+}
+
+.buy-type .buy-text {
+    line-height: 30px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.buy-type .type-input {
+    border: solid 1px #e6e6e6;
+    outline: none;
+    padding: 12px 10px;
+    width: 100%;
+    border-radius: 0px;
+    background-color: #fbfbfb;
+}
+
+.buy-wrapper .buy-button {
+    border: 1px solid #1dc483;
+    color: #fff;
+    background-color: #1dc483;
+    padding: 7px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.buy-wrapper .buy-button:hover {
+    background-color: #35240d;
+    color: #fff;
+    border: 1px solid #35240d;
+}
+
+.info-section .border-line {
+    width: 485px;
+    color: rgba(255, 255, 255, 0.4);
+    border-top: 1px solid;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.info-section .product-info {
+    line-height: 1.5;
+    color: #737373;
+    font-size: 13px;
+    padding-top: 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-top: 1px solid #eee;
+    text-align: justify;
+}
