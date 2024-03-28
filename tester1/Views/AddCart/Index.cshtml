@@ -59,6 +59,9 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
     }
+    .section::after{
+        background:none;
+    }
    
 
 </style>
@@ -105,7 +108,7 @@
                             <td style="width: 15%">
                                 @String.Format("{0:#,###}", total) <strong style="text-decoration-line: underline; margin-left: -2px; text-transform: initial;">đ</strong>
                             </td>
-                            <td><a href="#" data-id="@item.product.MaSP" class="btn-delete">Xoá</a></td>
+                            <td><a href="#" data-id="@item.product.MaSP" class="btn btn-delete" style="width: 70%; font-size: smaller; background-color:#dc3545"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                     }
                 </tbody>
@@ -118,7 +121,7 @@
             </table>
 
             <button id="btnContinue" class="btn btn-primary">Tiếp tục mua hàng</button>
-            <button id="btnDeleteAll" class="btn btn-danger">Xoá giỏ hàng</button>
+            <button id="btnDeleteAll" class="btn btn-danger">Xóa giỏ hàng</button>
             <button id="btnPayment1" class="btn btn-success">Thanh toán</button>
 
         }

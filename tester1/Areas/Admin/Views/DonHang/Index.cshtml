@@ -5,6 +5,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/snowfall/0.1.6/snowfall.min.js"></script>
+
 
 <style>
     .custom-select {
@@ -31,6 +33,7 @@
         .custom-select option {
             background-color: #fff;
         }
+
     .pagination-container {
         display: inline-block;
     }
@@ -57,9 +60,11 @@
                     background-color: #428bca;
                     color: #fff;
                 }
-
-
 </style>
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <section class="content">
 
     <!-- Default box -->
@@ -68,7 +73,7 @@
             <h3 class="card-title">Danh sách đơn hàng</h3>
         </div>
         <div id="orderList" class="card-body">
-            <div class="form-group">
+            <div style="width:20%" class="form-group">
                 <label for="trangThai">Lọc theo trạng thái:</label>
                 <select id="trangThai" class="custom-select">
                     <option value="">Tất cả</option>
@@ -81,21 +86,27 @@
                 </select>
                 <button id="filterButton" class="btn btn-primary">Lọc</button>
             </div>
+            <button style="float:right; margin-bottom:20px" type="button" class="btn btn-success" id="downloadExcel"> Xuat excel</button>
+            <button id="clearAllSelected">Clear CheckBox</button>
+            <button id="LoadData">Lấy dữ liệu</button>
+
+
 
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th width="3%">#</th>
+
                         <th width="5%">Mã đơn hàng</th>
-                        <th>Tên Khách hàng</th>
-                        <th>Phone</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
                         <th>Tiền</th>
                         <th width="5%">Ngày tạo</th>
-                        <th width="15%">Lời Nhắn</th>
-                        <th width="10%">Phương Thức Thanh Toán</th>
+                        <th width="15%">Ghi chú</th>
+                        <th width="10%">Phương thức thanh toán</th>
                         <th width="10%">Trạng thái đơn hàng hiện tại</th>
-                        <th>Giờ Huỷ Đơn</th>
-                        <th>Option</th>
+                        <th>Giờ huỷ đơn</th>
+                        <th>Chức năng</th>
+                        <th width="5%">Xuất excel</th>
                     </tr>
                 </thead>
 
@@ -137,11 +148,10 @@
                                     break;
                             }
                             <tr class="@rowClass" style="color: @textColor">
-                                <td>@i</td>
                                 <td>@item.MaDH</td>
                                 <td>@item.Ten</td>
                                 <td>@item.Sdt</td>
-                                <td>@item.TongTien</td>
+                                <td>@string.Format("{0:#,##0}", item.TongTien)<span>đ</span></td>
                                 <td>@item.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm")</td>
                                 <td>@item.Ghichu</td>
                                 <td>@item.PhuongThucThanhToan</td>
@@ -198,6 +208,13 @@
                                     <a href="/Admin/DonHang/View/@item.MaDH" class="btn btn-sm btn-success">Xem</a>
                                     <button class="btnHuyDonHang btn btn-sm btn-danger" data-id="@item.MaDH">Huỷ đơn hàng</button>
                                 </td>
+                                <td>
+                                    <div style="margin: 35px 15px" class="form-check">
+                                        <input style="width: 20px; height: 20px; margin-right: 10px;" class="form-check-input" type="checkbox" value="" id="id=" flexCheckChecked_@item.MaDH" data-orderid="@item.MaDH">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>
                             i++;
                         }
@@ -219,6 +236,8 @@
     </div>
 
 </section>
+
+
 <script>
     var buttons = document.getElementsByClassName('btnCapNhat');
     for (var i = 0; i < buttons.length; i++) {
@@ -284,6 +303,132 @@
         window.location.href = url;
     });
 </script>
+
+
+<script>
+    // Lưu trạng thái checkbox khi được chọn
+    document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const orderId = this.getAttribute('data-orderid');
+            console.log(orderId)
+            if (this.checked) {
+                localStorage.setItem(orderId, 'checked'); // Lưu vào Local Storage
+                document.cookie = `tempOrderId=${orderId}`; // Lưu vào Cookie tạm
+            } else {
+                localStorage.removeItem(orderId);
+                document.cookie = `tempOrderId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`; // Xóa Cookie tạm
+            }
+        });
+
+        const orderId = checkbox.getAttribute('data-orderid');
+        const tempOrderId = getCookie('tempOrderId');
+        if (localStorage.getItem(orderId) === 'checked' || tempOrderId === orderId) {
+            checkbox.checked = true;
+        }
+    });
+
+    // Hàm lấy Cookie
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const tempOrderId = getCookie('tempOrderId');
+        if (tempOrderId) {
+            const checkbox = document.getElementById(`flexCheckChecked_${tempOrderId}`);
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        }
+    });
+
+
+</script>
+
+<script>
+    // xoá cookie
+    // Lưu trạng thái checkbox khi được chọn
+    document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const orderId = this.getAttribute('data-orderid');
+            if (this.checked) {
+                localStorage.setItem(orderId, 'checked'); // Lưu vào Local Storage
+                document.cookie = `tempOrderId=${orderId}`;
+                // Xóa Cookie sau 15 phút
+                setTimeout(function () {
+                    document.cookie = `tempOrderId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+                }, 15 * 60 * 1000); // 15 phút
+            } else {
+                localStorage.removeItem(orderId);
+                document.cookie = `tempOrderId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+            }
+        });
+
+        // Khôi phục trạng thái của checkbox từ Local Storage
+        const orderId = checkbox.getAttribute('data-orderid');
+        if (localStorage.getItem(orderId) === 'checked') {
+            checkbox.checked = true;
+        }
+    });
+    // clear checkbox
+    document.getElementById('clearAllSelected').addEventListener('click', function () {
+        document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+            if (checkbox.checked) {
+                const orderId = checkbox.getAttribute('data-orderid');
+                checkbox.checked = false;
+                localStorage.removeItem(orderId);
+                document.cookie = `tempOrderId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+            }
+        });
+    });
+
+
+</script>
+@* truyền data sang controller Excel *@
+
+<script>
+    document.getElementById('downloadExcel').addEventListener('click', function () {
+        const selectedOrderIds = [];
+        document.querySelectorAll('.form-check-input').forEach(function (checkbox) {
+            if (checkbox.checked) {
+                const orderId = checkbox.getAttribute('data-orderid');
+                selectedOrderIds.push(orderId);
+            }
+        });
+        fetch('/Excel/getIdOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ids: selectedOrderIds })
+        })
+            .then(response => {
+                return response.blob(); // Chuyển đổi phản hồi sang blob
+            })
+            .then(blob => {
+                // Tạo một đường dẫn URL tạm thời cho file Excel
+                const url = window.URL.createObjectURL(new Blob([blob]));
+
+                // Tạo một thẻ a để tải file
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Orders_OrdersDetails.xlsx');
+                document.body.appendChild(link);
+
+                // Kích hoạt sự kiện click trên thẻ a để tải file
+                link.click();
+
+                // Xóa URL tạm thời sau khi tải xong
+                link.parentNode.removeChild(link);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
+</script>
+
 
 
 

@@ -1,7 +1,9 @@
 ﻿@model List<tester1.Models.SanPham>
+
 @{
     ViewBag.Title = "ProductCategory";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 
 }
 @section css{
@@ -11,6 +13,7 @@
     .btn {
         width: 65%;
     }
+
     #content {
         background: #fff;
     }
@@ -25,36 +28,35 @@
     <div class="nav-2">
         <a href="/Home/Index">Trang chủ</a>
         <span>//</span>
-        <p>Hoa quả sạch</p>
+        <p>@ViewBag.FirstProduct.DanhMuc.TenDM</p>
     </div>
     <!-- product-container -->
     <div style="padding: 0 15px;" class="row  product-container">
         <div style="max-width: 70%;" class="col l-9">
-            <h1 class="category">
-                Tên Danh Mục
-            </h1>
+            
             <div class="typical_product">
+                <div class="img-intro">
+                    <img height="415" src="@ViewBag.FirstProduct.HinhAnh" alt="">
+                </div>
                 <div class="intro-product">
-                    <h1>@ViewBag.FirstProduct.TenSP</h1>
-                    <p class="text-intro">
+                    <h1 style="margin-left:10px;">@ViewBag.FirstProduct.TenSP</h1>
+                    <p class="text-intro" style="margin-left: 10px; font-size:large">
                         @ViewBag.FirstProduct.MoTa
                     </p>
-                    <p class="price">
-                        <strong>Giá:</strong> @ViewBag.FirstProduct.GiaBan.ToString("N0")
+                    <p style="margin-left: 30px;" class="price">
+                        <strong>Giá:</strong> @ViewBag.FirstProduct.GiaBan.ToString("N0")<span>đ</span>
                     </p>
-                    <div class="btn btn-intro">
+                    <div style="margin-left: 26px" class="btn btn-intro">
                         <a href=" /AddCart/AddItem?productId=@ViewBag.FirstProduct.MaSP&quantity=1">
                             <span>
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                Mua Hàng
+                                Đặt món
                             </span>
                         </a>
                     </div>
                 </div>
 
-                <div class="img-intro">
-                    <img height="415" src="@ViewBag.FirstProduct.HinhAnh" alt="">
-                </div>
+
             </div>
 
 
@@ -68,12 +70,12 @@
                                 <h1>
                                     @item.TenSP
                                 </h1>
-                                <p><small>Giá:</small> @tester1.Common.Common.FormatNumber(item.GiaBan, 0)</p>
+                                <p><small>Giá:</small> @tester1.Common.Common.FormatNumber(item.GiaBan, 0)<span>đ</span></p>
 
                                 <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
                                     <span>
                                         <i class="fa-solid fa-cart-shopping"></i>
-                                        Mua Hàng
+                                        Đặt món
                                     </span>
                                 </div>
 
@@ -91,16 +93,16 @@
                 <h1 class="section">Danh Mục</h1>
                 <ul class="item-sidebar">
                     <li>
-                        <a href="">Hoa quả sạch</a>
+                        <a href="/Home/ProductCategory/1">Khai vị</a>
                     </li>
                     <li>
-                        <a href="">Hoa quả sạch</a>
+                        <a href="/Home/ProductCategory/2">Món chính</a>
                     </li>
                     <li>
-                        <a href="">Hoa quả sạch</a>
+                        <a href="/Home/ProductCategory/3">Tráng miệng</a>
                     </li>
                     <li>
-                        <a href="">Hoa quả sạch</a>
+                        <a href="/Home/ProductCategory/4">Nước uống</a>
                     </li>
                 </ul>
             </div>

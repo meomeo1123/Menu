@@ -1,66 +1,72 @@
 ﻿
 @using System.Web
 @using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
 
-@if (HttpContext.Current.User.Identity.IsAuthenticated)
-{
-    <div class="head-top">
-        <div class="grid wide">
-            <ul class="login">
-                <li>
-                    <a href="/Account/LogOff">
-                        <i class="fa-solid fa-user"></i>
-                        Đăng Xuất
-                    </a>
-                <li>|</li>
-                <li>
-                    <a href="/User/Index">
-                        <i class="fa-solid fa-user"></i>
-                        Tài khoản của tôi
-                    </a>
-                </li>
-                <li>|</li>
-                <li>
-                    <a href="/AddCart/index">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Giỏ hàng
-                        <span id="cartItemCount">@Html.Action("BagCart", "AddCart")</span>
-                    </a>
-                </li>
-            </ul>
-            <p><i class="fa-solid fa-phone"></i>Liên hệ : 03214838747832</p>
-        </div>
-    </div>
-
+@{
+    var controller = ViewContext.Controller as Controller;
+    var userManager = controller.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+    var user = userManager.FindById(User.Identity.GetUserId());
 }
-else
-{
-    <div class="head-top">
-        <div class="grid wide">
-            <ul class="login">
-                <li>
-                    <a href="/Account/Login">
-                        <i class="fa-solid fa-user"></i>
-                        Đăng nhập
-                    </a>
-                <li>|</li>
-                <li>
-                    <a href="/Account/Register">
-                        <i class="fa-solid fa-user"></i>
-                        Đăng kí
-                    </a>
-                </li>
-                <li>|</li>
-                <li>
-                    <a href="/AddCart/index">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Giỏ hàng
-                        <span id="cartItemCount">@Html.Action("BagCart", "AddCart")</span>
-                    </a>
-                </li>
-            </ul>
-            <p><i class="fa-solid fa-phone"></i>Liên hệ : 03214838747832</p>
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        <div class="head-top">
+            <div class="grid wide">
+                <ul class="login">
+                    <li>
+                        <a href="/Account/LogOff">
+                            <i class="fa-solid fa-user"></i>
+                            Đăng Xuất
+                        </a>
+                    <li>|</li>
+                    <li>
+                        <a href="/User/Index">
+                            <i class="fa-solid fa-user"></i>
+                            @user.Name
+                        </a>
+                    </li>
+                    <li>|</li>
+                    <li>
+                        <a href="/AddCart/index">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Giỏ hàng
+                            <span id="cartItemCount">@Html.Action("BagCart", "AddCart")</span>
+                        </a>
+                    </li>
+                </ul>
+                <p><i class="fa-solid fa-phone"></i>Liên hệ : 03214838747832</p>
+            </div>
         </div>
-    </div>
 
-}
+    }
+    else
+    {
+        <div class="head-top">
+            <div class="grid wide">
+                <ul class="login">
+                    <li>
+                        <a href="/Account/Login">
+                            <i class="fa-solid fa-user"></i>
+                            Đăng nhập
+                        </a>
+                    <li>|</li>
+                    <li>
+                        <a href="/Account/Register">
+                            <i class="fa-solid fa-user"></i>
+                            Đăng kí
+                        </a>
+                    </li>
+                    <li>|</li>
+                    <li>
+                        <a href="/AddCart/index">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Giỏ hàng
+                            <span id="cartItemCount">@Html.Action("BagCart", "AddCart")</span>
+                        </a>
+                    </li>
+                </ul>
+                <p><i class="fa-solid fa-phone"></i>Liên hệ : 03214838747832</p>
+            </div>
+        </div>
+
+    }

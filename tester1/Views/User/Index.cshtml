@@ -92,9 +92,8 @@
                 cursor: not-allowed;
             }
 </style>
-<h1 style=" font-size: 28px; margin: 0; text-transform: uppercase; padding: 20px px 0px; font-weight:300;color:35240d;margin:20px 0;">Tài Khoản</h1>
 <div class="container">
-    <div style="width: 68%; margin-right: 10px;" class="order-section">
+    <div style="width: 100%; margin-right: 10px;" class="order-section">
         <h2 style="font-size: 23px; margin: 0; text-transform: uppercase; padding: 20px 0px; font-weight: 300; color: #35240d; margin: 20px 0;">Đơn hàng của bạn</h2>
         @if (!Model.Any())
         {
@@ -102,7 +101,7 @@
         }
         else
         {
-            <div id="orderList" class="card-body">
+            <div id="orderList" class="card-body" >
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -111,7 +110,7 @@
                             <th width="15%">Phương Thức Thanh Toán</th>
                             <th width="7%">Tổng Tiền</th>
                             <th width="15%">Trạng thái đơn hàng hiện tại</th>
-                            <th width="2%">#</th>
+                            <th width="2%">Tùy chọn</th>
                         </tr>
                     </thead>
 
@@ -124,7 +123,7 @@
                                     <td>@item.NgayDatHang.Value.ToString("dd/MM/yyyy HH:mm")</td>
                                     <td>@item.Ghichu</td>
                                     <td>@item.PhuongThucThanhToan</td>
-                                    <td width="7%">@item.TongTien</td>
+                                    <td width="7%">@string.Format("{0:#,##0}", item.TongTien)<span>đ</span></td>
 
                                     <td>
                                         @if (item.TrangThaiDonHang == 1)
@@ -180,12 +179,7 @@
         }
     </div>
 
-    <div style="width: 30%;" class="user-info-section">
-        <h2 style="font-size: 20px; margin: 0; text-transform: uppercase; padding: 20px 0px; font-weight: 300; color: #35240d; margin: 20px 0;">Thông tin người dùng</h2>
-        <!-- Thêm thông tin người dùng khác vào đây -->
-        <p><strong>Tên:</strong> @user.Name</p>
-        <p><strong>Email:</strong> @user.Email</p>
-    </div>
+    
 </div>
 <script>
     var cancelButtons = document.getElementsByClassName('btnHuyDonHang');

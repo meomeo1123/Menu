@@ -31,13 +31,13 @@
                                     <tbody>
                                         <tr>
                                             <td valign="top" style="padding:48px 48px 32px">
-                                                <div style="color:#636363;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left">
+                                                <div style="color: #636363; font-family: 'Arial'" ,Helvetica,Roboto,Arial,sans-serif;font-size:14px;line-height:150%;text-align:left">
 
-                                                    <p style="margin:0 0 16px">Xin chào {{TenKhachHang}},</p>
+                                                    <p style="margin:0 0 16px">Xin chào {{shipName}},</p>
 
 
                                                     <h2 style="color:#96588a;display:block;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;font-size:18px;font-weight:bold;line-height:130%;margin:0 0 18px;text-align:left">
-                                                        [Đơn hàng #{{MaDon}}] ({{NgayDat}})
+                                                        [Đơn hàng #{{newOrderCode}}]
                                                     </h2>
 
                                                     <div style="margin-bottom:40px">
@@ -62,29 +62,11 @@
                                                             </thead>
                                                             <tbody>
                                                                 {{SanPham}}
-                                                                <!--<tr>
-                                                                    <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif;word-wrap:break-word">
-                                                                        Nước uống Đông Trùng Hạ Thảo
-                                                                    </td>
-                                                                    <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
-                                                                        1
-                                                                    </td>
-                                                                    <td style="color:#636363;border:1px solid #e5e5e5;padding:12px;text-align:left;vertical-align:middle;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif">
-                                                                        <span>1.499.000&nbsp;<span>₫</span></span>
-                                                                    </td>
-                                                                </tr>-->
+
 
                                                             </tbody>
                                                             <tfoot>
-                                                                <tr>
-                                                                    <th scope="row" colspan="2"
-                                                                        style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">
-                                                                        Nguyên giá:
-                                                                    </th>
-                                                                    <td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left;border-top-width:4px">
-                                                                        <span>{{ThanhTien}}&nbsp;<span>₫</span></span>
-                                                                    </td>
-                                                                </tr>
+
                                                                 <!--<tr>
                                                                     <th scope="row" colspan="2"
                                                                         style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">
@@ -99,7 +81,16 @@
                                                                         Tổng cộng:
                                                                     </th>
                                                                     <td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">
-                                                                        <span>{{TongTien}}&nbsp;<span>₫</span></span>
+                                                                        <span>{{total}}&nbsp;<span>₫</span></span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row" colspan="2"
+                                                                        style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">
+                                                                        Phương thức thanh toán:
+                                                                    </th>
+                                                                    <td style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left">
+                                                                        <span>{{Phuongthucthanhtoan}}&nbsp;</span>
                                                                     </td>
                                                                 </tr>
                                                             </tfoot>
@@ -118,10 +109,10 @@
                                                                     </h2>
 
                                                                     <address style="padding:12px;color:#636363;border:1px solid #e5e5e5">
-                                                                        {{TenKhachHang}}<br>{{DiaChiNhanHang}} <br><a href="tel:{{Phone}}"
-                                                                                                                      style="color:#96588a;font-weight:normal;text-decoration:underline"
-                                                                                                                      target="_blank">{{Phone}}</a> <br><a href="mailto:{{Email}}"
-                                                                                                                                                           target="_blank">{{Email}}</a>
+                                                                        {{shipName}}<br>{{district}} <br><a href="tel:{{mobile}}"
+                                                                                                            style="color:#96588a;font-weight:normal;text-decoration:underline"
+                                                                                                            target="_blank">{{mobile}}</a> <br><a href="mailto:{{email}}"
+                                                                                                                                                  target="_blank">{{email}}</a>
                                                                     </address>
                                                                 </td>
                                                             </tr>

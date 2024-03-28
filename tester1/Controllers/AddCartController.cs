@@ -14,6 +14,11 @@ using System.Web.Script.Serialization;
 using tester1.Models;
 using Google.Apis.Gmail.v1.Data;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
+using MoMo;
+using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 
 namespace tester1.Controllers
 {
@@ -74,7 +79,7 @@ namespace tester1.Controllers
 
             return RedirectToAction("Index", "AddCart");
         }
-        
+
         public ActionResult AddItem(long productId, int quantity)
         {
 
@@ -145,7 +150,6 @@ namespace tester1.Controllers
             }
             return cart;
         }
-
         private string GenerateOrderCode(string maxOrderCode)
         {
             string orderCodePrefix = "DH";
@@ -156,7 +160,6 @@ namespace tester1.Controllers
 
             return orderCode;
         }
-
         [HttpGet]
         public ActionResult Payment()
         {
@@ -172,7 +175,7 @@ namespace tester1.Controllers
                 {
                     list = (List<CartItem>)cart;
                 }
-            return View(list);
+                return View(list);
             }
         }
         private EmailService emailService;
@@ -181,8 +184,61 @@ namespace tester1.Controllers
             emailService = new EmailService();
         }
 
+
+        // sale 
+        // public ActionResult GetSalesForUser()
+        // {
+        //     string loggedInUserId = User.Identity.GetUserId(); // Lấy thông tin id của người dùng đăng nhập ở đây
+        //     var userSales = db.ChiTietSales
+        //         .Where(sale => sale.idUser == loggedInUserId)
+        //        .Join(db.KhuyenMais,
+        //               sale => sale.IdKm,
+        //              km => km.IdKm,
+        //               (sale, km) => new { ChiTietSale = sale, KhuyenMai = km })
+        //        .ToList();
+        //       return Json(userSales, JsonRequestBehavior.AllowGet);
+        // }
+
+        public PartialViewResult GetSalesForUser()
+        {
+            string loggedInUserId = User.Identity.GetUserId();
+            var userSales = db.ChiTietSales
+                .Where(sale => sale.idUser == loggedInUserId)
+                .Join(db.KhuyenMais,
+                      sale => sale.IdKm,
+                      km => km.IdKm,
+                      (sale, km) => new SalePromotionDTO
+                      {
+                          ChiTietSale = sale,
+                          KhuyenMai = km
+                      })
+                .ToList();
+            return PartialView(userSales);
+        }
+
+        [HttpGet]
+        public ActionResult GetPromoSale()
+        {
+            // Lấy giá trị promoSale từ Session
+            var PromoSale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+            return Content(PromoSale.ToString()); // Trả về giá trị giảm giá dưới dạng chuỗi
+        }
+
+
         [HttpPost]
-        public ActionResult Payment(string shipName, string mobile, string address, string email,string district, string note, string paymentMethod)
+        public ActionResult SubmitPromoSale(int promoSale, int promoId)
+        {
+            // Lưu promoSale vào session
+            Session["SubmittedPromoSale"] = promoSale;
+            Session["IdKm"] = promoId;
+            return Json(new { success = true });
+        }
+
+
+
+        // end 
+        [HttpPost]
+        public ActionResult Payment(string shipName, string mobile, string address, string email, string district, string note, string paymentMethod)
         {
             var userId = User.Identity.GetUserId();
             var code = new { Success = false, Code = -1 };
@@ -191,7 +247,7 @@ namespace tester1.Controllers
             var order = new DonHang();
             order.MaDH = newOrderCode;
             order.NgayDatHang = DateTime.Now;
-            order.DiaChi = address;
+            Session["diachi"] = order.DiaChi = address;
             order.Sdt = mobile;
             order.Ten = shipName;
             order.Email = email;
@@ -200,6 +256,10 @@ namespace tester1.Controllers
             order.TrangThaiDonHang = 1;
             order.IdUser = userId;
             TempData["Email"] = email;
+            TempData["MaDH"] = newOrderCode;
+            // truy xuất sale
+
+            // end
             if (paymentMethod == "1")
             {
                 order.PhuongThucThanhToan = "Tiền mặt";
@@ -228,9 +288,60 @@ namespace tester1.Controllers
                     order.TongTien = (double)total;
                     db.SubmitChanges();
 
+                    var Sale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+                    if (Sale > 0)
+                    {
+                        // Lấy MaDH từ TempData
+                        var maDH = TempData["MaDH"] as string;
+                        if (maDH != null)
+                        {
+                            var Order = db.DonHangs.FirstOrDefault(o => o.MaDH == maDH);
+                            if (Order != null)
+                            {
+                                // Sử dụng thông tin trong order để tính toán giảm giá và cập nhật tổng tiền
+                                Order.TongTien = Order.TongTien - (Order.TongTien * Sale / 100.0);
+                                Order.IdKm = Convert.ToInt32(Session["IdKm"]);
+                                var chiTietSale = db.ChiTietSales.FirstOrDefault(c => c.idUser == userId && c.IdKm == Order.IdKm);
+                                chiTietSale.Status = 0;
+                                // 0 là dã sử dụng 
+                                // Lưu các thay đổi vào cơ sở dữ liệu
+                                db.SubmitChanges();
+                            }
+                        }
+                    }
                     // Xóa giỏ hàng
                     Session[CartSession] = null;
+                    Session["IdKm"] = null;
+                    Session["SubmittedPromoSale"] = null;
                     // Gửi email xác nhận cho khách hàng
+                    try
+                    {
+                        string emailContentPath = Server.MapPath("~/Content/template/send2.html");
+                        string emailContent = System.IO.File.ReadAllText(emailContentPath);
+
+                        // Thực hiện thay thế các placeholder trong file HTML với dữ liệu từ OrderEmailModel
+                        emailContent = emailContent.Replace("{{shipName}}", shipName)
+                                                   .Replace("{{newOrderCode}}", newOrderCode)
+                                                   //.Replace("{{NgayDatHang}}", DateTime.Now)
+                                                   .Replace("{{district}}", district)
+                                                   .Replace("{{mobile}}", mobile)
+                                                   .Replace("{{total}}", total.ToString())
+                                                   .Replace("{{email}}", email);
+                        bool isEmailSent = MailHelper1.SendConfirmationEmail(email, shipName, emailContentPath);
+
+                        if (isEmailSent)
+                        {
+                            TempData["SuccessMessage"] = "Đơn hàng đã được đặt thành công và email xác nhận đã được gửi.";
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email.";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email: " + ex.Message;
+                    }
 
                     // Gửi email thông báo đơn hàng mới cho admin
 
@@ -246,11 +357,18 @@ namespace tester1.Controllers
                     return Redirect("/AddCart/UnSuccess");
                 }
             }
-             else if (paymentMethod == "2")
+            else if (paymentMethod == "2")
             {
                 return RedirectToAction("CheckOut", new { shipName = shipName, mobile = mobile, district = district, address = address, email = email, note = note, paymentMethod = paymentMethod });
             }
+            else if (paymentMethod == "3")
+            {
+                Session["User"] = userId;
+                return RedirectToAction("PaymentMomo", new { shipName = shipName, mobile = mobile, district = district, address = address, email = email, note = note, paymentMethod = paymentMethod });
+            }
+
             // ...
+
 
             return Redirect("/AddCart/Success");
         }
@@ -266,8 +384,8 @@ namespace tester1.Controllers
         {
             return View();
         }
-
-        public ActionResult CheckOut(string shipName, string mobile, string address, string email,string district, string note, string paymentMethod)
+        // vnpay
+        public ActionResult CheckOut(string shipName, string mobile, string address, string email, string district, string note, string paymentMethod)
         {
             var cart = Session[CartSession];
             var list = new List<CartItem>();
@@ -276,11 +394,26 @@ namespace tester1.Controllers
                 list = (List<CartItem>)cart;
             }
             decimal tongtien = 0;
-            foreach (var item in list)
+            var Sale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+            if (Sale > 0)
             {
-                decimal thanhtien = item.Quantity * (decimal)item.product.GiaBan;
-                tongtien += thanhtien;
+                // Lấy MaDH từ TempData
+                foreach (var item in list)
+                {
+                    decimal thanhtien = item.Quantity * (decimal)item.product.GiaBan;
+                    thanhtien = thanhtien - (thanhtien * (decimal)Sale / 100.0m);
+                    tongtien += thanhtien;
+                }
             }
+            else
+            {
+                foreach (var item in list)
+                {
+                    decimal thanhtien = item.Quantity * (decimal)item.product.GiaBan;
+                    tongtien += thanhtien;
+                }
+            }
+
             tongtien = tongtien * 100;
             string url = ConfigurationManager.AppSettings["Url"];
             string returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
@@ -314,7 +447,7 @@ namespace tester1.Controllers
             return Redirect(paymentUrl);
         }
 
-         public ActionResult PaymentConfirm()
+        public ActionResult PaymentConfirm()
         {
             if (Request.QueryString.Count > 0)
             {
@@ -393,9 +526,67 @@ namespace tester1.Controllers
                             // Cập nhật tổng tiền của đơn hàng
                             order.TongTien = (double)total;
                             db.SubmitChanges();
+
+                            // sale
+                            var Sale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+                            if (Sale > 0)
+                            {
+                                // Lấy MaDH từ TempData
+                                var maDH = TempData["MaDH"] as string;
+                                if (maDH != null)
+                                {
+                                    var Order = db.DonHangs.FirstOrDefault(o => o.MaDH == maDH);
+                                    if (Order != null)
+                                    {
+                                        // Sử dụng thông tin trong order để tính toán giảm giá và cập nhật tổng tiền
+                                        Order.TongTien = Order.TongTien - (Order.TongTien * Sale / 100.0);
+                                        Order.IdKm = Convert.ToInt32(Session["IdKm"]);
+                                        var chiTietSale = db.ChiTietSales.FirstOrDefault(c => c.idUser == userId && c.IdKm == Order.IdKm);
+                                        chiTietSale.Status = 0;
+
+                                        //0 là voucher đã sử dụng
+                                        // Lưu các thay đổi vào cơ sở dữ liệu
+                                        db.SubmitChanges();
+                                    }
+                                }
+                            }
+
                             Session[CartSession] = null;
+                            Session["IdKm"] = null;
+                            Session["SubmittedPromoSale"] = null;
 
                             // Gửi thông báo thành công cho người dùng
+                            // Gửi email xác nhận cho khách hàng
+                            try
+                            {
+                                string emailContentPath = Server.MapPath("~/Content/template/send2.html");
+                                string emailContent = System.IO.File.ReadAllText(emailContentPath);
+
+                                // Thực hiện thay thế các placeholder trong file HTML với dữ liệu từ OrderEmailModel
+                                emailContent = emailContent.Replace("{{shipName}}", shipName)
+                                                           .Replace("{{newOrderCode}}", newOrderCode)
+                                                           //.Replace("{{NgayDatHang}}", DateTime.Now)
+                                                           .Replace("{{district}}", district)
+                                                           .Replace("{{mobile}}", mobile)
+                                                           .Replace("{{total}}", total.ToString())
+                                                           .Replace("{{email}}", email);
+                                bool isEmailSent = MailHelper1.SendConfirmationEmail(email, shipName, emailContentPath);
+
+                                if (isEmailSent)
+                                {
+                                    TempData["SuccessMessage"] = "Đơn hàng đã được đặt thành công và email xác nhận đã được gửi.";
+                                }
+                                else
+                                {
+                                    TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email.";
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email: " + ex.Message;
+                            }
+
+                            // end mail
                             ViewBag.Message = "Thanh toán thành công hóa đơn " + order.MaDH;
                             return Redirect("/AddCart/Success");
                         }
@@ -423,12 +614,248 @@ namespace tester1.Controllers
                     return View("ErrorView");
                 }
 
-            
+
             }
             return View();
         }
+        // end vnpay
+
+        // momo tới chơi bro
+
+        public ActionResult PaymentMomo(string shipName, string mobile, string address, string email, string district, string note, string paymentMethod)
+        {
+
+            var cart = Session[CartSession];
+            var list = new List<CartItem>();
+            if (cart != null)
+            {
+                list = (List<CartItem>)cart;
+            }
+            decimal tongtien = 0;
+            var Sale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+            if (Sale > 0)
+            {
+                // Lấy MaDH từ TempData
+                foreach (var item in list)
+                {
+                    decimal thanhtien = item.Quantity * (decimal)item.product.GiaBan;
+                    thanhtien = thanhtien - (thanhtien * (decimal)Sale / 100.0m);
+                    tongtien += thanhtien;
+                }
+            }
+            else
+            {
+                foreach (var item in list)
+                {
+                    decimal thanhtien = item.Quantity * (decimal)item.product.GiaBan;
+                    tongtien += thanhtien;
+                }
+            }
+            tongtien = tongtien * 1;
+            //request params need to request to MoMo system
+            string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            string partnerCode = "MOMOOJOI20210710";
+            string accessKey = "iPXneGmrJH0G8FOP";
+            string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
+            string orderInfo = "test";
+            string returnUrl = "https://localhost:44342/AddCart/ConfirmPaymentClient";
+            string notifyurl = " https://9ce7-116-100-43-50.ngrok-free.app/AddCart/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+
+            string amount = tongtien.ToString();
+            string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
+            string requestId = DateTime.Now.Ticks.ToString();
+            string extraData = "";
+
+            //Before sign HMAC SHA256 signature
+            string rawHash = "partnerCode=" +
+                partnerCode + "&accessKey=" +
+                accessKey + "&requestId=" +
+                requestId + "&amount=" +
+                amount + "&orderId=" +
+                orderid + "&orderInfo=" +
+                orderInfo + "&returnUrl=" +
+                returnUrl + "&notifyUrl=" +
+                notifyurl + "&extraData=" +
+                extraData;
+
+            MoMoSecurity crypto = new MoMoSecurity();
+            //sign signature SHA256
+            string signature = crypto.signSHA256(rawHash, serectkey);
+
+            //build body json request
+            JObject message = new JObject
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
+
+            };
+
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+            JObject jmessage = JObject.Parse(responseFromMomo);
+            TempData["ShipName"] = shipName;
+            TempData["Mobile"] = mobile;
+            TempData["Address"] = address;
+            TempData["Email"] = email;
+            TempData["Note"] = note;
+            TempData["District"] = district;
+
+            return Redirect(jmessage.GetValue("payUrl").ToString());
 
 
+        }
+        //Khi thanh toán xong ở cổng thanh toán Momo, Momo sẽ trả về một số thông tin, trong đó có errorCode để check thông tin thanh toán
+        //errorCode = 0 : thanh toán thành công (Request.QueryString["errorCode"])
+        public ActionResult ConfirmPaymentClient(Result result)
+        {
+            string rMessage = result.message;
+            string rOrderId = result.orderId;
+            string rErrorCode = result.errorCode; // = 0: thanh toán thành công
+            ViewBag.mess = rErrorCode;
+            SavePayment();
+            return View();
+        }
+
+        public void SavePayment()
+        {
+            if (Request.QueryString.Count > 0)
+            {
+                string errorCode = Request.QueryString["errorCode"];
+
+                if (errorCode == "0")
+                {
+                    //  Giao dịch thanh toán thành công
+                    ViewBag.Message = "Giao dịch thanh toán thành công";
+                    string shipName = TempData["ShipName"] as string;
+                    string mobile = TempData["Mobile"] as string;
+                    string address = TempData["Address"] as string;
+                    string email = TempData["Email"] as string;
+                    string note = TempData["Note"] as string;
+                    string district = TempData["District"] as string;
+
+                    var code = new { Success = false, Code = -1 };
+                    var maxOrderCode = db.DonHangs.Max(o => o.MaDH);
+                    string newOrderCode = GenerateOrderCode(maxOrderCode);
+                    var order = new DonHang();
+                    order.MaDH = newOrderCode;
+                    order.NgayDatHang = DateTime.Now;
+                    order.DiaChi = address;
+                    order.Sdt = mobile;
+                    order.Ten = shipName;
+                    order.Email = email;
+                    order.Ghichu = note;
+                    order.Quan = district;
+                    order.TrangThaiDonHang = 1;
+                    if (Session["User"] != null)
+                    {
+                        order.IdUser = Session["User"].ToString();
+                    }
+                    order.PhuongThucThanhToan = "MoMo";
+                    db.DonHangs.InsertOnSubmit(order);
+                    db.SubmitChanges();
+
+                    var id = order.MaDH;
+
+                    // Lưu chi tiết đơn hàng vào cơ sở dữ liệu
+                    var cart = (List<CartItem>)Session[CartSession];
+                    decimal total = 0;
+
+                    foreach (var item in cart)
+                    {
+                        var orderDetail = new ChiTietDonHang();
+                        orderDetail.MaSP = item.product.MaSP;
+                        orderDetail.MaDH = id;
+                        orderDetail.TenSP = item.product.TenSP;
+                        orderDetail.GiaBan = item.product.GiaBan;
+                        orderDetail.SoLuong = item.Quantity;
+
+                        db.ChiTietDonHangs.InsertOnSubmit(orderDetail);
+
+                        total += (decimal)(item.product.GiaBan.GetValueOrDefault(0) * item.Quantity);
+                    }
+                    db.SubmitChanges();
+
+                    // Cập nhật tổng tiền của đơn hàng
+                    order.TongTien = (double)total;
+                    db.SubmitChanges();
+
+                    // sale
+                    var Sale = Convert.ToInt32(Session["SubmittedPromoSale"]);
+                    if (Sale > 0)
+                    {
+                        // Lấy MaDH từ TempData
+                        var maDH = TempData["MaDH"] as string;
+                        if (maDH != null)
+                        {
+                            var Order = db.DonHangs.FirstOrDefault(o => o.MaDH == maDH);
+                            if (Order != null)
+                            {
+                                // Sử dụng thông tin trong order để tính toán giảm giá và cập nhật tổng tiền
+                                Order.TongTien = Order.TongTien - (Order.TongTien * Sale / 100.0);
+                                Order.IdKm = Convert.ToInt32(Session["IdKm"]);
+                                var chiTietSale = db.ChiTietSales.FirstOrDefault(c => c.idUser == Session["User"] && c.IdKm == Order.IdKm);
+                                chiTietSale.Status = 0;
+
+                                //0 là voucher đã sử dụng
+                                // Lưu các thay đổi vào cơ sở dữ liệu
+                                db.SubmitChanges();
+                            }
+                        }
+                    }
+                    Session[CartSession] = null;
+                    Session["User"] = null;
+                    Session["IdKm"] = null;
+                    Session["SubmittedPromoSale"] = null;
+                    // Gửi email xác nhận cho khách hàng
+                    try
+                    {
+                        string emailContentPath = Server.MapPath("~/Content/template/send2.html");
+                        string emailContent = System.IO.File.ReadAllText(emailContentPath);
+
+                        // Thực hiện thay thế các placeholder trong file HTML với dữ liệu từ OrderEmailModel
+                        emailContent = emailContent.Replace("{{shipName}}", shipName)
+                                                   .Replace("{{newOrderCode}}", newOrderCode)
+                                                   //.Replace("{{NgayDatHang}}", DateTime.Now)
+                                                   .Replace("{{district}}", district)
+                                                   .Replace("{{mobile}}", mobile)
+                                                   .Replace("{{total}}", total.ToString())
+                                                   .Replace("{{email}}", email);
+                        bool isEmailSent = MailHelper1.SendConfirmationEmail(email, shipName, emailContentPath);
+
+                        if (isEmailSent)
+                        {
+                            TempData["SuccessMessage"] = "Đơn hàng đã được đặt thành công và email xác nhận đã được gửi.";
+                        }
+                        else
+                        {
+                            TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email.";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email: " + ex.Message;
+                    }
+
+                    //  end mail
+                    ViewBag.Message = "Thanh toán thành công hóa đơn " + order.MaDH;
+                }
+                else
+                {
+                    // Giao dịch thanh toán thất bại
+                    ViewBag.Message = "Giao dịch thanh toán thất bại. Mã lỗi: " + errorCode;
+                    // Thực hiện các hành động khác khi thanh toán thất bại ở đây
+                }
+            }
+
+        }
     }
 }
 

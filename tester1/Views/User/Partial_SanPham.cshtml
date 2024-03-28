@@ -3,7 +3,7 @@
 <style>
     #content {
         background: #fff;
-        height: 100%;
+        height: auto;
     }
 
     .product-table {
@@ -34,7 +34,7 @@
     <table class="table table-bordered product-table">
         <thead>
             <tr>
-                <th width="5%">#</th>
+                <th width="5%">STT</th>
                 <th width="25%">Tên sản phẩm</th>
                 <th width="15%">Hình ảnh</th>
                 <th>Giá</th>
@@ -45,14 +45,20 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@i</td>
-                    <td>@item.SanPham.TenSP</td>
-                    <td><img src="@item.SanPham.HinhAnh" alt="Alternate Text" class="product-image" /></td>
-                    <td>@item.GiaBan.Value.ToString("N0")</td>
-                    <td>@item.SoLuong</td>
-                    <td>@tester1.Common.Common.FormatNumber((item.GiaBan * item.SoLuong), 0)</td>
-                </tr>
+            <tr>
+                <td>@i</td>
+                <td>@item.SanPham.TenSP</td>
+                <td><img src="@item.SanPham.HinhAnh" alt="Alternate Text" class="product-image" /></td>
+                <td>@item.GiaBan.Value.ToString("N0")<span>đ</span></td>
+                <td>@item.SoLuong</td>
+                <td>@tester1.Common.Common.FormatNumber((item.GiaBan * item.SoLuong), 0)đ</td>
+                @if (ViewBag.OrderStatus == 5 && Model != null && Model.Any())
+                {
+                    <td>
+                        <a href="@Url.Action("CheckReview", "Rating", new { MaSP = item.MaSP, MaDH = item.MaDH })" class="btn btn-primary" style="width:70%">Xem đánh giá</a>
+                    </td>
+                }
+            </tr>
                 i++;
             }
         </tbody>

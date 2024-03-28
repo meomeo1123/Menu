@@ -5,112 +5,113 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Sửa</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>SanPham</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.MaSP)
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MaSP)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.MaDM, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.MaDM, (SelectList)ViewBag.Categories, "Chọn danh mục", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MaDM, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Mã danh mục</strong>
+                @Html.DropDownListFor(model => model.MaDM, (SelectList)ViewBag.Categories, "Chọn danh mục", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaDM, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.TenSP, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Tên sản phẩm</strong>
+                @Html.EditorFor(model => model.TenSP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenSP, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            <strong>Hình</strong>
-            @Html.EditorFor(model => model.HinhAnh, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
-            <input type="file" name="fileUpload" id="fileUpload" accept="image/*"
-                   style="display:none;" />
-            <input type="button" id="btnUpload" value="Chọn" class="btn btn-success" />
-            @if (!string.IsNullOrEmpty(@Model.HinhAnh))
-            {
-                <img width="300" height="300" style="object-fit:cover" src="@Model.HinhAnh" id="pictureUpload1" />
-            }
-            <img style="display:none" src="" id="pictureUpload" width="300" height="300" />
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Hình</strong>
+                @Html.EditorFor(model => model.HinhAnh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+                <input type="file" name="fileUpload" id="fileUpload" accept="image/*"
+                       style="display:none;" />
+                <input type="button" id="btnUpload" value="Chọn" class="btn btn-success" />
+                @if (!string.IsNullOrEmpty(@Model.HinhAnh))
+                {
+                    <img width="300" height="300" style="object-fit:cover" src="@Model.HinhAnh" id="pictureUpload1" />
+                }
+                <img style="display:none" src="" id="pictureUpload" width="300" height="300" />
+            </div>
         </div>
-    </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.GiaNhap, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.GiaNhap, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Gía nhập</strong>
+                @Html.EditorFor(model => model.GiaNhap, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GiaNhap, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.GiaBan, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Gía bán</strong>
+                @Html.EditorFor(model => model.GiaBan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GiaBan, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.MoTa, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Mô tả</strong>
+                <textarea class="form-control" name="NoiDung" id="inputND"> 
+                @Model.MoTa
+            </textarea>
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
 
 
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.IdS, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.IdS, (SelectList)ViewBag.StatusList, "-- Select status --", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IdS, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Tình trạng</strong>
+                @Html.DropDownListFor(model => model.IdS, (SelectList)ViewBag.StatusList, "-- Select status --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdS, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.NoiDung, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <textarea class="form-control" name="NoiDung" id="inputND"> 
+        <div class="form-group">
+            <div class="col-md-10">
+                <strong>Nội dung</strong>
+                <textarea class="form-control" name="NoiDung" id="inputND"> 
                 @Model.NoiDung
             </textarea>
-            @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.NoiDung, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button class="btn-icon-split btn btn-success" type="submit">
-                <span class="icon text-white">
-                    <i class="fas fa-check"></i>
-                    <span style="padding : 0" class="text">
-                        Save
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn-icon-split btn btn-success" type="submit">
+                    <span class="icon text-white">
+                        <i class="fas fa-check"></i>
+                        <span style="padding : 0" class="text">
+                            Lưu
+                        </span>
                     </span>
-                </span>
-            </button>
+                </button>
 
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 }
 <div>
     <div>
@@ -118,7 +119,7 @@
             <span class="icon text-white">
                 <i class="fas fa-arrow-right"></i>
                 <span style="padding : 0" class="text">
-                    Back to List
+                    Trở về
                 </span>
             </span>
         </button>

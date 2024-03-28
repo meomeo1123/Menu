@@ -62,13 +62,17 @@
                 <h2>Danh sách sản phẩm</h2>
             </div>
             <div class="col-12">
+                @*@if (Model.TrangThaiDonHang == 5) // Giả sử TrangThai của đơn hàng được lưu trong Model.TrangThai
+                    {
+                        <a href="@Url.Action("CheckReview", "Rating", new { MaDH = Model.MaDH })" class="btn btn-primary">Đánh giá đơn hàng</a>
+                    }*@
                 @Html.Action("Partial_SanPham", "User", new { id = Model.MaDH })
             </div>
         </div>
     </div>
     <!-- /.card-body -->
-    <div  class="card-footer">
-            <a style="width:150px" href="/User/Index" class="btn btn-primary">Trở về</a>
+    <div class="card-footer">
+        <a style="width:150px" href="/User/Index" class="btn btn-primary">Trở về</a>
     </div>
-   
+
 </div>

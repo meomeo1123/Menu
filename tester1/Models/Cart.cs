@@ -10,8 +10,9 @@ namespace tester1.Models
     {
         public SanPham product { get; set; }
         public int Quantity { get; set; }
-
+        public SalePromotionDTO SalePromotionDTO { get; set; }
     }
+    
     public class Cart
     {
         List<CartItem> items = new List<CartItem>();

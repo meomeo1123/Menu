@@ -15,47 +15,70 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
 
-<h2>Edit</h2>
+<h2>Sửa khuyến mãi</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>KhuyenMai</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.IdKm)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.NameKm, htmlAttributes: new { @class = "control-label col-md-2" })
+        
         <div class="col-md-10">
+            <strong>Tên khuyến mãi</strong>
             @Html.EditorFor(model => model.NameKm, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.NameKm, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        
         <div class="col-md-10">
+            <strong>Ngày bắt đầu</strong>
             @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", id = "StartTime" } })
             @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        
         <div class="col-md-10">
+            <strong>Ngày kết thúc</strong>
             @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", id = "EndTime" } })
             @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PromoSale, htmlAttributes: new { @class = "control-label col-md-2" })
+        
         <div class="col-md-10">
+            <strong>Giá trị khuyến mãi</strong>
             @Html.EditorFor(model => model.PromoSale, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.PromoSale, "", new { @class = "text-danger" })
+        </div>
+    </div> 
+    <div class="form-group">
+        
+        <div class="col-md-10">
+            <strong>Số lượng</strong>
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+       
+        <div class="col-md-10">
+            <strong>Trạng thái</strong>
+            @Html.DropDownList("Status", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "On", Value = "on" },
+                new SelectListItem { Text = "Off", Value = "off" },
+                new SelectListItem { Text = "Wait", Value = "wait" }
+            }, new { @class = "form-control" })
         </div>
     </div>
 
@@ -65,7 +88,7 @@
                 <span class="icon text-white">
                     <i class="fas fa-check"></i>
                     <span style="padding : 0" class="text">
-                        Save
+                        Lưu
                     </span>
                 </span>
             </button>
@@ -80,7 +103,7 @@
         <span class="icon text-white">
             <i class="fas fa-arrow-right"></i>
             <span style="padding : 0" class="text">
-                Back to List
+                Trở về
             </span>
         </span>
     </button>

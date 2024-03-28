@@ -7,144 +7,313 @@
 
 @{
     ViewBag.Title = "Index";
+
+}
+@{
+    var currentPromotion = ViewBag.CurrentPromotion;
 }
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 
-@section scripts{
-    <script src="~/Scripts/Controllers/cartController.js"></script>
-}
 
-<style>
-    .section {
-        background: #fff;
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    @section scripts{
+        <script src="~/Scripts/Controllers/cartController.js"></script>
     }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    .table {
-        width: 94%;
-        margin: 0 auto;
-        text-align: center;
-    }
 
-    td {
-        text-align: center; /* căn giữa ngang */
-        vertical-align: middle !important; /* căn giữa dọc */
-    }
-
-    .content {
-        width: 1200px;
-    }
-
-    .back-button {
-        background-color: #2a9dcc;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-        .back-button:hover {
-            background-color: #1c7baa;
-            text-decoration:none;
-            color:aliceblue;
+    <style>
+        .section {
+            background: #fff;
         }
-     .group{
-         width:1200px;
-         margin: 0 auto;
-     }
-    .content {
-        margin: 0 auto;
-    }
-    .content::after{
-        display:block;
-        content:"";
-        clear:both;
-    }
-</style>
 
-<div class="content">
-    <div class="section group">
-        <div class="col-md-4" style=" width: 49.333333%;">
-            @using(Html.BeginForm("Payment", "AddCart", FormMethod.Post, new { id = "paymentForm" }))
-            {
-                <h2>Thông tin đơn hàng</h2>
-                <div class="form-group">
-                    <label>Người nhận</label>
-                    <input name="shipName" required class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Điện thoại</label>
-                    <input name="mobile" class="form-control" required maxlength="11" minlength="9" />
-                </div>
-                <div class="form-group">
-                    <label>Quận:</label>
-                    <select name="district" class="form-control">
-                        <option value="Quận 1">Quận 1</option>
-                        <option value="Quận 2">Quận 2</option>
-                        <option value="Quận 3">Quận 3</option>
-                        <option value="Quận 4">Quận 4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Địa chỉ</label>
-                    <input name="address" required class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label>Lời nhắn cho cửa hàng ...</label>
-                    <textarea class="form-control" name="note" id="inputND" style="width: 100%; resize: vertical;"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="paymentMethod">Phương thức thanh toán:</label>
-                    <select class="form-control" id="paymentMethod" name="paymentMethod">
-                        <option value="1" data-method="Tiền mặt">Tiền mặt</option>
-                        <option value="2" data-method="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Gửi đơn hàng</button>
+        .table {
+            width: 94%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        td {
+            text-align: center; /* căn giữa ngang */
+            vertical-align: middle !important; /* căn giữa dọc */
+        }
+
+        .content {
+            width: 1200px;
+        }
+
+        .back-button {
+            background-color: #2a9dcc;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .back-button:hover {
+                background-color: #1c7baa;
+                text-decoration: none;
+                color: aliceblue;
             }
-            <a href="@Url.Action("Index", "Home")" class="back-button">Trở về</a>
+
+        .group {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content {
+            margin: 0 auto;
+        }
+
+            .content::after {
+                display: block;
+                content: "";
+                clear: both;
+            }
+        #showDataButton {
+            /* Màu nền và màu chữ */
+            background:none;
+            color: #2a9dcc;
+            border-radius: 4px;
+            /* Kích thước và độ dày chữ */
+            padding: 4px 8px;
+            font-size: 16px;
+            /* Định cỡ và kiểu chữ */
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            margin-left: 10px;
+        }
+            #showDataButton:hover {
+            }
+
+
+        button {
+            background: none;
+            padding: 4px 8px; /* Độ lớn của nút */
+            font-size: 16px; /* Kích thước chữ của nút */
+            color: #2a9dcc; /* Màu chữ */
+            border: none; /* Bỏ viền */
+            border-radius: 4px; /* Góc bo tròn */
+            cursor: pointer; /* Biểu tượng chuột khi di chuyển vào nút */
+            margin-left: 10px;
+        }
+
+            button:hover {
+            }
+
+
+        .payment-methods {
+            display: flex;
+            gap: 10px; /* Khoảng cách giữa các hình ảnh */
+        }
+
+        .payment-option {
+            width: 140px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            height: 80px;
+        }
+
+            .payment-option.active {
+                border-color: blue; /* Thay đổi màu viền khi được chọn */
+            }
+    </style>
+
+    <div class="content">
+        <div class="section group">
+            <div class="col-md-4" style=" width: 49.333333%;">
+                @using (Html.BeginForm("Payment", "AddCart", FormMethod.Post, new { id = "paymentForm" }))
+                {
+                    <h2>Thông tin đơn hàng</h2>
+                    <div class="form-group">
+                        <label>Người nhận</label>
+                        <input name="shipName" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Điện thoại</label>
+                        <input name="mobile" class="form-control" required maxlength="11" minlength="9" />
+                    </div>
+                    <div class="form-group">
+                        <label for="district">Quận:</label>
+                        <select id="district" name="district" class="form-control">
+                            <option value="Quận 1">Quận 1</option>
+                            <option value="Quận 2">Quận 2</option>
+                            <option value="Quận 3">Quận 3</option>
+                            <option value="Quận 4">Quận 4</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input id="address" name="address" required class="form-control" onclick="getLocation()" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Lời nhắn cho cửa hàng ...</label>
+                        <textarea class="form-control" name="note" id="inputND" style="width: 100%; resize: vertical;"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phương thức thanh toán:</label>
+                        <div class="payment-methods">
+                            <img style="object-fit: contain" src="~/Content/img/cod.jpg" alt="COD" data-value="1" class="payment-option">
+                            <img style="object-fit: contain" src="~/Content/img/vnpay.png" alt="Chuyển khoản ngân hàng" data-value="2" class="payment-option">
+                            <img style="object-fit: contain" src="~/Content/img/momo.jpg" alt="MoMo" data-value="3" class="payment-option">
+                        </div>
+                        <input type="hidden" id="selectedPaymentMethod" name="paymentMethod">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi đơn hàng</button>
+                }
+                <a href="@Url.Action("Index", "Home")" class="back-button">Trở về</a>
+            </div>
+            </div>
+            <div class="col-md-8" style="width: 48.666667%; float:right">
+                @if (Model.Count > 0)
+                {
+                    double totalPrice = 0;
+                    <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
+                        <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Đơn hàng</h1>
+                        <div style="width: 550px; border-bottom:1px solid #ccc ; margin-bottom: 20px;" class="div"></div>
+                        <ul style="padding: 0 20px;" class="product-c">
+                            @foreach (var item in Model)
+                            {
+                                double total = item.product.GiaBan.Value * item.Quantity;
+                                totalPrice += total;
+                                <li style="display:flex;justify-content: space-between; position: relative; margin-bottom: 15px; align-items:center">
+                                    <div style="position:relative">
+                                        <img width="80" height="80" style="object-fit: cover; border-radius: 7px; border: 0.7px solid #ccc;" src="@Url.Content(item.product.HinhAnh)" alt="">
+                                        <span style="font-size: .78em; white-space: nowrap; padding: 1.4px 0.72em; border-radius: 2em; background-color: #2a9dcc; color: #fff; position: absolute; top: -0.55em; z-index: 3; box-sizing: border-box; min-width: 1.75em; height: 1.75em; text-align: center; line-height: 1.75em; left:70px;">@item.Quantity</span>
+                                    </div>
+                                    <h2 style="color: #333; width: 60%; font-size: 19.5px; font-weight: 500; margin: 0">
+                                        @item.product.TenSP
+                                    </h2>
+                                    <p style="color: #717171; font-size:17px; margin:0">@String.Format("{0:#,###}", total)<sup>đ</sup></p>
+                                </li>
+                            }
+                        </ul>
+                        <div style="width: 92%; border-bottom: 1.5px solid #ccc; margin: 20px auto;" class="div"></div>
+                    </div>
+
+                    <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
+                        <button id="showDataButton">Chọn mã khuyến mãi</button>
+                        <div id="salesData" style="display: none;">
+                            @{Html.RenderAction("GetSalesForUser", "AddCart");}
+                        </div>
+                        <div id="voucherSection">
+                            <button type="button" onclick="resetPromoSale()">Huỷ chọn Voucher</button>
+
+                        </div>
+
+                        <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Tổng tiền</h1>
+                        <p style="padding: 0 20px;">
+                            Tổng cộng : <span data-initial-total-price="initialTotalPrice" style="float:right; font-size: 21px; color: #2a9dcc;" id="totalPrice">
+                                @string.Format("{0:N0}", totalPrice)<sup>đ</sup>
+                            </span>
+                        </p>
+
+                    </div>
+                }
+
+                else
+                {
+                    <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
+                }
+
+                </div>
         </div>
-        <div class="col-md-8" style="width: 48.666667%; float:right">
-            @if (Model.Count > 0)
-            {
-                double totalPrice = 0;
-                <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
-                    <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Đơn hàng</h1>
-                    <div style="width: 550px; border-bottom:1px solid #ccc ; margin-bottom: 20px;" class="div"></div>
-                    <ul style="padding: 0 20px;" class="product-c">
-                        @foreach (var item in Model)
-                        {
-                            double total = item.product.GiaBan.Value * item.Quantity;
-                            totalPrice += total;
-                            <li style="display:flex;justify-content: space-between; position: relative; margin-bottom: 15px; align-items:center">
-                                <div style="position:relative">
-                                    <img width="80" height="80" style="object-fit: cover; border-radius: 7px; border: 0.7px solid #ccc;" src="@Url.Content(item.product.HinhAnh)" alt="">
-                                    <span style="font-size: .78em; white-space: nowrap; padding: 1.4px 0.72em; border-radius: 2em; background-color: #2a9dcc; color: #fff; position: absolute; top: -0.55em; z-index: 3; box-sizing: border-box; min-width: 1.75em; height: 1.75em; text-align: center; line-height: 1.75em; left:70px;">@item.Quantity</span>
-                                </div>
-                                <h2 style="color: #333; width: 60%; font-size: 19.5px; font-weight: 500; margin: 0">
-                                    @item.product.TenSP
-                                </h2>
-                                <p style="color: #717171; font-size:17px; margin:0">@String.Format("{0:#,###}", total)</p>
-                            </li>
-                        }
-                    </ul>
-                    <div style="width: 92%; border-bottom: 1.5px solid #ccc; margin: 20px auto;" class="div"></div>
-                </div>
+            <script>
+                // Lưu trữ giá trị ban đầu của tổng tiền khi trang được tải
+                var initialTotalPrice = parseFloat($('#totalPrice').text().replace(/[^\d.-]/g, ''));
 
-                <div style="width: 550px; float: right; background-color: #fafafa; border:1px solid #ccc;" class="order">
-                    <h1 style="font-size: 20px; padding-left: 20px; margin-bottom: 20px;">Tổng tiền</h1>
-                    <p style="padding: 0 20px;">Tổng cộng : <span style="float:right; font-size: 21px; color: #2a9dcc;">@string.Format("{0:N0}", totalPrice) đ</span></p>
-                </div>
-            }
-            else
-            {
-               <span class="alert alert-danger">Chưa có sản phẩm nào trong giỏ hàng</span>
-            }
+                // Hàm cập nhật tổng tiền khi chọn voucher mới
+                function updateTotalPrice(promoSaleValue) {
+                    // Sử dụng giá trị ban đầu của tổng tiền khi chọn voucher mới
+                    var totalPrice = initialTotalPrice;
+
+                    // Kiểm tra nếu có giá trị giảm giá
+                    if (promoSaleValue > 0) {
+                        var discountedPrice = totalPrice - (totalPrice * promoSaleValue / 100);
+                        var formattedPrice = discountedPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                        $('#totalPrice').text(formattedPrice);
+                    } else {
+                        var formattedPrice = totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                        $('#totalPrice').text(formattedPrice);
+                    }
+                }
+            </script>
+                <script>
+                    // reset update 
+                    function resetPromoSale() {
+                        $.ajax({
+                            url: '/AddCart/SubmitPromoSale',
+                            type: 'POST',
+                            data: { promoSale: 0, promoId: 0 }, // Gửi giá trị 0 để reset voucher
+                            success: function (result) {
+                                updateTotalPrice(0); // Cập nhật lại giá trị total khi reset voucher
+                            },
+                            error: function () {
+                                // Xử lý lỗi nếu cần thiết
+                            }
+                        });
+                    }
+                </script>
+            <script>
+                    function updateDiscount(discount) {
+                        document.getElementById("discountAmount").innerText = discount +"đ";
+                    }
+
+                    function showSalesData() {
+                        // Hiển thị phần dữ liệu voucher khi người dùng click vào nút "Chọn voucher".
+                        document.getElementById("salesData").style.display = "block";
+                    }
+            </script>
+
+                <script>
+                    document.getElementById("showDataButton").addEventListener("click", function () {
+                        var salesData = document.getElementById("salesData");
+                        if (salesData.style.display === "none") {
+                            salesData.style.display = "block"; // Hiển thị dữ liệu khi click
+                        } else {
+                            salesData.style.display = "none"; // Ẩn dữ liệu khi click lần thứ 2
+                        }
+                    });
+
+
+                    function updatePromoSale() {
+                        $.ajax({
+                            url: '/AddCart/GetPromoSale',
+                            type: 'GET',
+                            success: function (data) {
+                                var promoSaleValue = parseFloat(data); // Chuyển đổi giá trị giảm giá thành số
+                                updateTotalPrice(promoSaleValue); // Cập nhật tổng dựa trên giá trị giảm giá nhận được
+                            },
+                            error: function () {
+                                // Xử lý lỗi nếu có
+                            }
+                        });
+                    }
+                </script>
+
+<script>
+    $(document).ready(function () {
+        $('.payment-option').on('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành động mặc định khi click vào hình ảnh
+
+            $('.payment-option').removeClass('active'); // Loại bỏ lớp active từ tất cả các hình ảnh
+            $(this).addClass('active'); // Thêm lớp active cho hình ảnh được chọn
+
+            var selectedValue = $(this).data('value'); // Lấy giá trị từ thuộc tính data-value của hình ảnh
+            $('#selectedPaymentMethod').val(selectedValue); // Thiết lập giá trị hidden field tương ứng với hình ảnh được chọn
+
+            // Tùy chỉnh xử lý tiếp theo ở đây, ví dụ: gọi hàm hoặc thực hiện một hành động khác
+        });
+    });
+
+</script>
 

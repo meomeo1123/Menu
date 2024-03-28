@@ -36,6 +36,8 @@ namespace tester1.Controllers
         public ActionResult Partial_SanPham(string id)
         {
             var items = db.ChiTietDonHangs.Where(x => x.MaDH == id).ToList();
+            var orderStatus = db.DonHangs.FirstOrDefault(x => x.MaDH == id)?.TrangThaiDonHang ?? 0; // Giả sử TrangThai là trường lưu trạng thái đơn hàng
+            ViewBag.OrderStatus = orderStatus; // Truyền trạng thái đơn hàng tới view
             return PartialView(items);
         }
         public ActionResult HuyDonHang(string orderId)

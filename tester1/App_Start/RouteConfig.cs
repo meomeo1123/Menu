@@ -23,6 +23,11 @@ namespace tester1
                 defaults: new { controller = "ListUser", action = "Index", id = UrlParameter.Optional },
                 namespaces: new[] { "tester1.Areas.Admin.Controllers" }
             );
+            routes.MapRoute(
+               name: "Admin1",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "AddCart", action = "GetSalesForUser", id = UrlParameter.Optional }
+            );
         }
     }
 }

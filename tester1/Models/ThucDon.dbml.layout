@@ -1,154 +1,187 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12, 13.375" name="ThucDon">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14, 14.375" name="ThucDon">
   <DataContextMoniker Name="/ThucDonDataContext" />
   <nestedChildShapes>
-    <classShape Id="09c28763-09ca-4b5e-8baa-2305b94920be" absoluteBounds="3.75, 9.875, 2, 1.1939925130208344">
+    <classShape Id="44389b8c-9fca-4ea0-bf3c-cc7356e3c390" absoluteBounds="3.75, 10.875, 2, 1.1939925130208344">
       <DataClassMoniker Name="/ThucDonDataContext/TrangThai" />
       <nestedChildShapes>
-        <elementListCompartment Id="d0692e4e-14b1-4376-9a0e-ab38dacf4e1d" absoluteBounds="3.765, 10.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2982d102-0edd-421a-8266-5829e0969099" absoluteBounds="3.765, 11.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d86b8d1b-8a2e-409d-a2d4-13f815e5a618" absoluteBounds="6.5, 10.25, 2, 2.5401025390624987">
+    <classShape Id="a96c9058-7174-4f1b-8403-c1314289e10a" absoluteBounds="6.5, 11.125, 2, 2.5401025390624987">
       <DataClassMoniker Name="/ThucDonDataContext/SanPham" />
       <nestedChildShapes>
-        <elementListCompartment Id="9dce1e69-3ea5-4402-afcd-4ed486dad9d4" absoluteBounds="6.515, 10.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="097d9ff9-d84d-4e5a-94a8-703cd975d175" absoluteBounds="6.515, 11.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="086558e7-eca9-44e2-a6d1-40c8d2090d83" absoluteBounds="9.75, 4.875, 2, 1.7708968098958327">
-      <DataClassMoniker Name="/ThucDonDataContext/GioiThieu" />
+    <classShape Id="b61cc126-288e-4188-91d9-29f93418df46" absoluteBounds="3.5, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/ThucDonDataContext/QuanLiKM" />
       <nestedChildShapes>
-        <elementListCompartment Id="2d13a1dc-3e83-4c6f-b6ad-c4a1b10e6a95" absoluteBounds="9.765, 5.335, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="9aae4f97-778c-41c1-bb69-62ab0798ba02" absoluteBounds="3.515, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="f3499e30-383d-4b40-8193-56560ac20d6a" absoluteBounds="6.5, 0.75, 2, 3.5016097005208326">
-      <DataClassMoniker Name="/ThucDonDataContext/DonHang" />
-      <nestedChildShapes>
-        <elementListCompartment Id="5c539bbf-5fc7-4b60-9e62-55050e32df2b" absoluteBounds="6.515, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="7f03e539-e3ba-4622-aa2e-5301e011ccb3" absoluteBounds="3.75, 11.875, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/ThucDonDataContext/DanhMuc" />
-      <nestedChildShapes>
-        <elementListCompartment Id="5b538519-b2c4-482b-889d-0a4d395d0320" absoluteBounds="3.765, 12.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="ed02b50f-a63a-486b-8c60-e47fa96ab5cb" absoluteBounds="6.5, 5.625, 2, 1.7708968098958327">
-      <DataClassMoniker Name="/ThucDonDataContext/DanhGia" />
-      <nestedChildShapes>
-        <elementListCompartment Id="db87b2c9-098a-484d-8cc7-854e1c53bc59" absoluteBounds="6.515, 6.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="1dc641a4-9f54-45a5-843f-12ad0681e266" absoluteBounds="9.25, 1.5, 2, 1.9631982421875003">
-      <DataClassMoniker Name="/ThucDonDataContext/ChiTietDonHang" />
-      <nestedChildShapes>
-        <elementListCompartment Id="a59f0728-bba3-461a-aea8-7a47916917a0" absoluteBounds="9.265, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="de74a5fd-b8eb-4c94-bf78-a883dffd44f2" absoluteBounds="0.75, 4.875, 2, 3.3093082682291657">
-      <DataClassMoniker Name="/ThucDonDataContext/AspNetUser" />
-      <nestedChildShapes>
-        <elementListCompartment Id="e83dab5e-f2b2-4830-8f0b-e03dcc622f6e" absoluteBounds="0.765, 5.335, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="e5b7850a-2306-4e6b-9b29-c1c1eaa7b1fd" absoluteBounds="3.5, 4.875, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/ThucDonDataContext/AspNetUserRole" />
-      <nestedChildShapes>
-        <elementListCompartment Id="984d396a-23b1-49a4-a51a-d1549c0bf817" absoluteBounds="3.515, 5.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="3e6d1f9d-30b8-411e-9c03-885618b642de" absoluteBounds="0.75, 1.75, 2, 1.3862939453125003">
-      <DataClassMoniker Name="/ThucDonDataContext/AspNetRole" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c865bfc7-8c33-4df4-909d-15da47e2da08" absoluteBounds="0.765, 2.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="dabe7118-bf37-4dd3-bd8f-a4b8e695ef51" absoluteBounds="3.5, 7.75, 2, 1.3862939453124987">
-      <DataClassMoniker Name="/ThucDonDataContext/AspNetUserLogin" />
-      <nestedChildShapes>
-        <elementListCompartment Id="0ea7c855-2fd0-4a48-897b-9d42cc408a16" absoluteBounds="3.515, 8.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(5.75 : 10.6594962565104); (6.5 : 10.6594962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/TrangThai/TrangThai_SanPham" />
-      <nodes>
-        <classShapeMoniker Id="09c28763-09ca-4b5e-8baa-2305b94920be" />
-        <classShapeMoniker Id="d86b8d1b-8a2e-409d-a2d4-13f815e5a618" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(5.75 : 12.3325512695312); (6.5 : 12.3325512695312)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/DanhMuc/DanhMuc_SanPham" />
-      <nodes>
-        <classShapeMoniker Id="7f03e539-e3ba-4622-aa2e-5301e011ccb3" />
-        <classShapeMoniker Id="d86b8d1b-8a2e-409d-a2d4-13f815e5a618" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(7.5 : 10.25); (7.5 : 7.39589680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/SanPham/SanPham_DanhGia" />
-      <nodes>
-        <classShapeMoniker Id="d86b8d1b-8a2e-409d-a2d4-13f815e5a618" />
-        <classShapeMoniker Id="ed02b50f-a63a-486b-8c60-e47fa96ab5cb" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 2.48159912109375); (9.25 : 2.48159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/DonHang/DonHang_ChiTietDonHang" />
-      <nodes>
-        <classShapeMoniker Id="f3499e30-383d-4b40-8193-56560ac20d6a" />
-        <classShapeMoniker Id="1dc641a4-9f54-45a5-843f-12ad0681e266" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.5 : 11.5200512695312); (9.46875 : 11.5200512695312); (9.46875 : 3.4631982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/SanPham/SanPham_ChiTietDonHang" />
-      <nodes>
-        <classShapeMoniker Id="d86b8d1b-8a2e-409d-a2d4-13f815e5a618" />
-        <classShapeMoniker Id="1dc641a4-9f54-45a5-843f-12ad0681e266" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 4.87653746153846); (3.12653746153846 : 4.5); (6.125 : 4.5); (6.125 : 4.62660970052083); (6.5 : 4.25160970052083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_DonHang" />
-      <nodes>
-        <classShapeMoniker Id="de74a5fd-b8eb-4c94-bf78-a883dffd44f2" />
-        <classShapeMoniker Id="f3499e30-383d-4b40-8193-56560ac20d6a" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.76369466145833); (6.5 : 6.76369466145833)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_DanhGia" />
-      <nodes>
-        <classShapeMoniker Id="de74a5fd-b8eb-4c94-bf78-a883dffd44f2" />
-        <classShapeMoniker Id="ed02b50f-a63a-486b-8c60-e47fa96ab5cb" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 5.50401748727965); (3.5 : 5.50401748727965)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_AspNetUserRole" />
-      <nodes>
-        <classShapeMoniker Id="de74a5fd-b8eb-4c94-bf78-a883dffd44f2" />
-        <classShapeMoniker Id="e5b7850a-2306-4e6b-9b29-c1c1eaa7b1fd" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 3.1362939453125); (3.125 : 3.5112939453125); (3.125 : 5.47199625651042); (3.5 : 5.47199625651042)]" fixedFrom="NotFixed" fixedTo="Algorithm">
-      <AssociationMoniker Name="/ThucDonDataContext/AspNetRole/AspNetRole_AspNetUserRole" />
-      <nodes>
-        <classShapeMoniker Id="3e6d1f9d-30b8-411e-9c03-885618b642de" />
-        <classShapeMoniker Id="e5b7850a-2306-4e6b-9b29-c1c1eaa7b1fd" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 7.96715413411458); (3.5 : 7.96715413411458)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_AspNetUserLogin" />
-      <nodes>
-        <classShapeMoniker Id="de74a5fd-b8eb-4c94-bf78-a883dffd44f2" />
-        <classShapeMoniker Id="dabe7118-bf37-4dd3-bd8f-a4b8e695ef51" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="e9b811a8-d126-4c73-9f54-7039f695e561" absoluteBounds="4, 1.375, 2, 1.7708968098958331">
+    <classShape Id="1335291e-4251-4579-94a3-4cb29835437e" absoluteBounds="0.75, 2.5, 2, 1.9631982421875005">
       <DataClassMoniker Name="/ThucDonDataContext/KhuyenMai" />
       <nestedChildShapes>
-        <elementListCompartment Id="badeb53b-af84-47c5-81d4-45e25e53700a" absoluteBounds="4.015, 1.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="47647030-7671-41d5-90d6-2334156e4590" absoluteBounds="0.765, 2.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6 : 2.26044840494792); (6.5 : 2.26044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="2e5e3846-c244-4a2a-8c0e-5e8ebd992b17" absoluteBounds="9.75, 10.125, 2, 1.7708968098958344">
+      <DataClassMoniker Name="/ThucDonDataContext/GioiThieu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64ff2441-3dc8-44fb-8187-eb9ddc34ac2c" absoluteBounds="9.765, 10.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="23da3d28-37b7-4c05-8aaa-d00006d79303" absoluteBounds="3.75, 12.875, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/ThucDonDataContext/DanhMuc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ecd85663-e1ea-48d8-8319-a762b2dc9de1" absoluteBounds="3.765, 13.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0f73e1f1-bc7e-4fb8-956b-d35563180a4f" absoluteBounds="6.5, 5.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/ThucDonDataContext/DonHang" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7ad7d4bf-7acf-4656-b776-6b29b349c92d" absoluteBounds="6.515, 6.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2a3cd742-84ad-4c34-8bdb-e0a56201f4ac" absoluteBounds="9.25, 3.25, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/ThucDonDataContext/DanhGia" />
+      <nestedChildShapes>
+        <elementListCompartment Id="332a41a7-cb1b-4380-979d-7749ea5b9b3f" absoluteBounds="9.265, 3.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8560716a-3a8e-4c66-a9b8-d399007ce0ce" absoluteBounds="3.5, 3.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ThucDonDataContext/ChiTietSale" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8edd3060-fe26-42b1-af7a-f46bde256fe7" absoluteBounds="3.515, 4.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="549f141d-210e-4702-b98b-0cab62f0098b" absoluteBounds="9.25, 6.375, 2, 2.1554996744791657">
+      <DataClassMoniker Name="/ThucDonDataContext/ChiTietDonHang" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f2c94ac9-56e1-4431-961b-b63d7e5a4cc0" absoluteBounds="9.265, 6.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f0c75a13-da5d-4e8e-9789-38271d457e30" absoluteBounds="0.75, 5.75, 2, 3.3093082682291657">
+      <DataClassMoniker Name="/ThucDonDataContext/AspNetUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="44b02f5c-773a-413c-bbd3-44c096db9413" absoluteBounds="0.765, 6.21, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a5eca73d-b49a-4874-a42e-b5a186a391ca" absoluteBounds="3.5, 6.875, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/ThucDonDataContext/AspNetUserRole" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bcfc99c3-2a4f-497a-b323-ce4a7c5ce667" absoluteBounds="3.515, 7.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="53556e6b-09f3-4c03-8a49-2936f0bef71b" absoluteBounds="11.75, 2.125, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/ThucDonDataContext/AccessCount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="68227c95-b24a-433d-b76e-5bdecf70f584" absoluteBounds="11.765, 2.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7536ed63-2ce0-4734-904a-96fbb56081f6" absoluteBounds="0.75, 10.75, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/ThucDonDataContext/AspNetRole" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6e6a6bfa-15dc-4841-8fd0-695b4ea8a8fd" absoluteBounds="0.765, 11.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.75 : 11.5969962565104); (6.5 : 11.5969962565104)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/TrangThai/TrangThai_SanPham" />
+      <nodes>
+        <classShapeMoniker Id="44389b8c-9fca-4ea0-bf3c-cc7356e3c390" />
+        <classShapeMoniker Id="a96c9058-7174-4f1b-8403-c1314289e10a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 2.5); (1.75 : 1.44314697265625); (3.5 : 1.44314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/KhuyenMai/KhuyenMai_QuanLiKM" />
+      <nodes>
+        <classShapeMoniker Id="1335291e-4251-4579-94a3-4cb29835437e" />
+        <classShapeMoniker Id="b61cc126-288e-4188-91d9-29f93418df46" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 13.2700512695312); (6.5 : 13.2700512695312)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/DanhMuc/DanhMuc_SanPham" />
+      <nodes>
+        <classShapeMoniker Id="23da3d28-37b7-4c05-8aaa-d00006d79303" />
+        <classShapeMoniker Id="a96c9058-7174-4f1b-8403-c1314289e10a" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 3.03125); (7.5 : 3.03125); (7.5 : 5.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ThucDonDataContext/KhuyenMai/KhuyenMai_DonHang" />
       <nodes>
-        <classShapeMoniker Id="e9b811a8-d126-4c73-9f54-7039f695e561" />
-        <classShapeMoniker Id="f3499e30-383d-4b40-8193-56560ac20d6a" />
+        <classShapeMoniker Id="1335291e-4251-4579-94a3-4cb29835437e" />
+        <classShapeMoniker Id="0f73e1f1-bc7e-4fb8-956b-d35563180a4f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.0312525 : 5.75); (8.0312525 : 4.42390055338542); (8.54166666666667 : 4.42390055338542 : JumpStart); (8.70833333333333 : 4.42390055338542 : JumpEnd); (9.25 : 4.42390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/DonHang/DonHang_DanhGia" />
+      <nodes>
+        <classShapeMoniker Id="0f73e1f1-bc7e-4fb8-956b-d35563180a4f" />
+        <classShapeMoniker Id="2a3cd742-84ad-4c34-8bdb-e0a56201f4ac" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 11.125); (8.875 : 10.75); (8.875 : 5.04210283007813); (9.25 : 5.04210283007813)]" fixedFrom="NotFixed" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/SanPham/SanPham_DanhGia" />
+      <nodes>
+        <classShapeMoniker Id="a96c9058-7174-4f1b-8403-c1314289e10a" />
+        <classShapeMoniker Id="2a3cd742-84ad-4c34-8bdb-e0a56201f4ac" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.04409912109375); (3.5 : 4.04409912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/KhuyenMai/KhuyenMai_ChiTietSale" />
+      <nodes>
+        <classShapeMoniker Id="1335291e-4251-4579-94a3-4cb29835437e" />
+        <classShapeMoniker Id="8560716a-3a8e-4c66-a9b8-d399007ce0ce" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 7.45274983723958); (8.79166666666667 : 7.45274983723958 : JumpStart); (8.95833333333333 : 7.45274983723958 : JumpEnd); (9.25 : 7.45274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/DonHang/DonHang_ChiTietDonHang" />
+      <nodes>
+        <classShapeMoniker Id="0f73e1f1-bc7e-4fb8-956b-d35563180a4f" />
+        <classShapeMoniker Id="549f141d-210e-4702-b98b-0cab62f0098b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.5 : 12.8117496744792); (9.46875 : 12.8117496744792); (9.46875 : 8.53049967447917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/SanPham/SanPham_ChiTietDonHang" />
+      <nodes>
+        <classShapeMoniker Id="a96c9058-7174-4f1b-8403-c1314289e10a" />
+        <classShapeMoniker Id="549f141d-210e-4702-b98b-0cab62f0098b" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 6.28125); (6.5 : 6.28125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_DonHang" />
+      <nodes>
+        <classShapeMoniker Id="f0c75a13-da5d-4e8e-9789-38271d457e30" />
+        <classShapeMoniker Id="0f73e1f1-bc7e-4fb8-956b-d35563180a4f" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 5.75); (1.75 : 5.45359537760417); (2.96460875060096 : 5.45359537760417 : JumpStart); (3.13127541726763 : 5.45359537760417 : JumpEnd); (3.16787997080328 : 5.45359537760417 : JumpStart); (3.33454663746995 : 5.45359537760417 : JumpEnd); (7.41666666666667 : 5.45359537760417 : JumpStart); (7.58333333333333 : 5.45359537760417 : JumpEnd); (7.94791916666667 : 5.45359537760417 : JumpStart); (8.11458583333333 : 5.45359537760417 : JumpEnd); (8.625 : 5.45359537760417); (8.625 : 3.80569827669271); (9.25 : 3.80569827669271)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_DanhGia" />
+      <nodes>
+        <classShapeMoniker Id="f0c75a13-da5d-4e8e-9789-38271d457e30" />
+        <classShapeMoniker Id="2a3cd742-84ad-4c34-8bdb-e0a56201f4ac" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 5.75153746153846); (3.125 : 5.37653746153846); (3.125 : 5.57980868174078); (3.50121330413662 : 5.20359537760417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_ChiTietSale" />
+      <nodes>
+        <classShapeMoniker Id="f0c75a13-da5d-4e8e-9789-38271d457e30" />
+        <classShapeMoniker Id="8560716a-3a8e-4c66-a9b8-d399007ce0ce" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 7.47199625651042); (3.5 : 7.47199625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/AspNetUser/AspNetUser_AspNetUserRole" />
+      <nodes>
+        <classShapeMoniker Id="f0c75a13-da5d-4e8e-9789-38271d457e30" />
+        <classShapeMoniker Id="a5eca73d-b49a-4874-a42e-b5a186a391ca" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 10.78125); (3.59375 : 10.78125); (3.59375 : 8.06899251302083)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ThucDonDataContext/AspNetRole/AspNetRole_AspNetUserRole" />
+      <nodes>
+        <classShapeMoniker Id="7536ed63-2ce0-4734-904a-96fbb56081f6" />
+        <classShapeMoniker Id="a5eca73d-b49a-4874-a42e-b5a186a391ca" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

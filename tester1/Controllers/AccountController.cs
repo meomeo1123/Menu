@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -144,7 +146,7 @@ namespace tester1.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -184,16 +186,37 @@ namespace tester1.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Tạo mã xác nhận ngẫu nhiên
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+
+                    // Tạo liên kết xác nhận tài khoản
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
+                    // Gửi email xác nhận
+                    await SendConfirmationEmail(user.Id, user.Email, code, callbackUrl);
+
                     await UserManager.AddToRoleAsync(user.Id, "User");
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return RedirectToAction("Index", "Home");
+                    // Chuyển hướng đến trang thông báo xác nhận email
+                    return View("ConfirmEmailSent");
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
             ViewBag.Roles = new SelectList(new List<string> { "User" });
             return View(model);
+        }
+
+        public async Task<ActionResult> ConfirmEmailSent(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            return View(result.Succeeded ? "ConfirmEmailSent" : "Error");
         }
 
         //
@@ -228,7 +251,47 @@ namespace tester1.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                // Xác nhận thành công, thực hiện hành động cần thiết
+                return View("ConfirmEmail");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        public async Task SendConfirmationEmail(string userId, string userEmail, string code, string callbackUrl)
+        {
+            var fromAddress = new MailAddress("freshop20dthe2@gmail.com", "Fresh Shop");
+            var toAddress = new MailAddress(userEmail);
+            const string subject = "Xác nhận tài khoản";
+
+            // Tạo nội dung email
+            var emailContent = "Xin chào,\n\n";
+            emailContent += "Vui lòng nhấp vào liên kết sau đây để xác nhận tài khoản:\n";
+            emailContent += callbackUrl;
+
+            var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = emailContent,
+                IsBodyHtml = false // Không sử dụng HTML trong email
+            };
+
+            // Cấu hình máy chủ SMTP
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("freshop20dthe2@gmail.com", "tnwt kmpj qjlq axvb")
+            };
+
+            await smtp.SendMailAsync(message);
         }
 
         //
@@ -254,15 +317,46 @@ namespace tester1.Controllers
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                // Tạo liên kết để người dùng có thể nhấp để khôi phục mật khẩu
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                // Tạo nội dung email
+                var emailContent = "Để khôi phục mật khẩu, vui lòng nhấp vào đường dẫn sau: " + callbackUrl;
+
+                // Sử dụng SmtpClient để gửi email
+                try
+                {
+                    var fromAddress = new MailAddress("freshop20dthe2@gmail.com", "Fresh Shop");
+                    var toAddress = new MailAddress(model.Email, user.Email);
+                    const string subject = "Khôi phục mật khẩu";
+                    var message = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = emailContent,
+                        //IsBodyHtml = true // Đánh dấu nội dung email là HTML
+                    };
+
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential("freshop20dthe2@gmail.com", "aphv bwhx tmwy kkwo")
+                    };
+
+                    smtp.Send(message);
+
+                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "Có lỗi xảy ra trong quá trình gửi email: " + ex.Message;
+                }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -438,7 +532,7 @@ namespace tester1.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -469,7 +563,7 @@ namespace tester1.Controllers
             base.Dispose(disposing);
         }
         //checklogin thanh toán
-    
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins

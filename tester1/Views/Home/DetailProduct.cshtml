@@ -1,43 +1,134 @@
-﻿
+﻿@model tester1.Models.ProductDetailViewModel
+
 @{
     ViewBag.Title = "DetailProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/release/v5.6.3/css/all.css">
 <link href="~/Content/cssChitiet/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-o3nVg7lO6TEp8Xla8hK0U5J0RMq2jKhS5+uv68Aqvb0R4ZuAiEHsh5y7qJZ5GWdZ" crossorigin="anonymous">
+
 <style>
     #content {
         background: #fff;
         height: fit-content;
     }
+
     #home-main {
-        font-size:20px;
+        font-size: 20px;
     }
+
     p {
-        margin-bottom:15px;
+        margin-bottom: 15px;
     }
+
     ul, li, h1, h2, h3, h4 {
         margin: 0px 0;
         padding: 0;
     }
-    #home-main #breadcrumbs{
-        padding-top:0;
+
+    #home-main #breadcrumbs {
+        padding-top: 0;
     }
-    #wrapper .content{
-        width:auto;
+
+    #wrapper .content {
+        width: auto;
     }
-    .Container-detail p{
-        font-size:16px;
-        line-height:18px;
-        
+
+    .Container-detail p {
+        font-size: 16px;
+        line-height: 18px;
     }
+
     .Container-detail h2, .Container-detail ul, .Container-detail h1, .Container-detail h3, .Container-detail h4, .Container-detail h5 {
         margin: 15px 0;
         padding: 0;
         line-height: 20px;
     }
-    #breadcrumbs .breadcrumbs-container{
-        width:auto;
+
+    #breadcrumbs .breadcrumbs-container {
+        width: auto;
+    }
+
+    #btnXemDanhGia1 {
+        padding: 10px 20px; /* Kích thước nút */
+        font-size: 16px; /* Kích thước chữ */
+        background-color: #50c78b; /* Màu nền của nút */
+        color: #fff; /* Màu chữ của nút */
+        border: none; /* Không có đường viền */
+        border-radius: 5px; /* Độ cong của các góc */
+        cursor: pointer; /* Hiển thị cursor khi rê chuột vào nút */
+        transition: background-color 0.5s; /* Hiệu ứng chuyển đổi màu nền */
+    }
+
+        #btnXemDanhGia1:hover {
+            background-color: #50ab56; /* Màu nền khi rê chuột vào nút */
+        }
+
+    .rating-filter {
+        display: flex;
+    }
+
+    .star-button {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 5px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-right: 5px; /* Khoảng cách giữa các nút */
+    }
+
+    .fas fa-star {
+        margin-right: 5px;
+    }
+
+
+    /*-----*/
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* Mờ chỉ phần nền phía sau modal */
+    .modal:before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* Màu mờ */
+        z-index: -1; /* Đặt sau phần nội dung modal */
     }
 </style>
 <section id="home-main">
@@ -46,7 +137,7 @@
             <ul>
                 <li class="/Home/Index">Trang chủ </li>
                 <span>//</span>
-                <li class="category">@Model.TenSP</li>
+                <li class="category">@Model.Product.TenSP</li>
             </ul>
         </div>
     </div>
@@ -56,36 +147,69 @@
                 <div class="col image-section">
                     <div class="main-container">
                         <div class="main-image js-container">
-                            <img class="main-img js-img" src="@Model.HinhAnh" alt="m-img">
+                            <img class="main-img js-img" src="@Model.Product.HinhAnh" alt="m-img">
 
                         </div>
                         <div style="margin-top:30px" class="Container-detail1">
                             <h1 style="font-size:20px; font-weight:600; margin-bottom:15px">Mô tả </h1>
                             <p style="font-size:16px; line-height:21px; letter-spacing:.3px" class="product-info1">
-                                @Html.Raw(Model.MoTa)
+                                @Html.Raw(Model.Product.MoTa)
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col info-section">
-                    <h1 class="info-text">@Model.TenSP</h1>
+                    <h1 class="info-text">@Model.Product.TenSP</h1>
                     <p>
                         <small>Giá:</small>
-                        @string.Format("{0:#,##0}",Model.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                        @string.Format("{0:#,##0}", Model.Product.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
                     </p>
-                    <div class="btn btn-product" onclick="addToCart(@Model.MaSP)">
+                    <div class="btn btn-product" onclick="addToCart(@Model.Product.MaSP)">
                         <span>
                             <i class="fa-solid fa-cart-shopping"></i>
-                            Mua Hàng
+                            Đặt món
                         </span>
                     </div>
                     <div class="Container-detail">
                         <p class="product-info">
-                            @Html.Raw(Model.NoiDung)
+                            @Html.Raw(Model.Product.NoiDung)
                         </p>
                     </div>
-                 
                 </div>
+
+                <!-- Button trigger modal -->
+                <button type="button" id="btnXemDanhGia1">
+                    Xem đánh giá
+                </button>
+
+                <!-- Modal -->
+                <div id="myModal" class="modal">
+                    <div class="modal-content" style="height: 650px;">
+                        <span class="close">&times;</span>
+                        <!-- Nút lọc -->
+                        <div class="rating-filter">
+                            <button onclick="filterRatingsModal(@Model.Product.MaSP, 5)" class="star-button"><i class="fas fa-star" style="color:orange;"></i> 5</button>
+                            <button onclick="filterRatingsModal(@Model.Product.MaSP, 4)" class="star-button"><i class="fas fa-star" style="color:orange;"></i> 4</button>
+                            <button onclick="filterRatingsModal(@Model.Product.MaSP, 3)" class="star-button"><i class="fas fa-star" style="color:orange;"></i> 3</button>
+                            <button onclick="filterRatingsModal(@Model.Product.MaSP, 2)" class="star-button"><i class="fas fa-star" style="color:orange;"></i> 2</button>
+                            <button onclick="filterRatingsModal(@Model.Product.MaSP, 1)" class="star-button"><i class="fas fa-star" style="color:orange;"></i> 1</button>
+                        </div>
+                        <!-- Nội dung đánh giá sẽ được load ở đây -->
+                        <div id="ratingsContent"></div>
+                        <!-- Nội dung đánh giá sau khi lọc sẽ được load ở đây -->
+                        <div id="ratingsContentModal"></div>
+                        <!-- Phân trang -->
+                        <div style="margin-top:30px" id="ratingPagination">
+                            <div id="paginationControls">
+                                <button onclick="prevPage()">Previous</button>
+                                <span id="paginationCurrentPage"></span>
+                                <button onclick="nextPage()">Next</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -93,7 +217,6 @@
         <div class="clear"></div>
     </div>
 </section>
-
 <script>
     const container = document.querySelector('.js-container');
     const image = document.querySelector('.js-container .js-img');
@@ -112,16 +235,18 @@
     container.addEventListener('mouseleave', function () {
         image.style.transform = 'scale(1)';
     });
-
 </script>
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
+
     <style>
         .swal2-popup {
             font-size: 1.4rem !important;
         }
     </style>
     <script>
+
         function addToCart(productId) {
             // Gửi yêu cầu thêm sản phẩm vào giỏ hàng bằng AJAX
             $.ajax({
@@ -153,5 +278,138 @@
                 }
             });
         }
+
+
+        // JavaScript để mở và đóng modal
+    document.getElementById("btnXemDanhGia1").onclick = function () {
+        document.getElementById("myModal").style.display = "block";
+        document.getElementById("wrapper").classList.add("blur"); // Làm mờ nền
+        // Load đánh giá vào modal
+        loadRatingsWithPagination(1); // Gọi hàm loadRatings để tải đánh giá khi modal được mở
+    };
+
+    document.getElementsByClassName("close")[0].onclick = function () {
+        document.getElementById("myModal").style.display = "none";
+        document.getElementById("wrapper").classList.remove("blur"); // Hủy mờ nền khi đóng modal
+    };
+
+    window.onclick = function (event) {
+        if (event.target == document.getElementById("myModal")) {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("wrapper").classList.remove("blur"); // Hủy mờ nền khi đóng modal
+        }
+    };
+
+    // Hàm tải đánh giá và phân trang
+    @*function loadRatings1(pageNumber) {
+        $.ajax({
+            url: '/Rating/ProductRatingsPartial', // Đường dẫn tới action trong controller để lấy đánh giá
+            type: 'GET',
+            data: { MaSP: @Model.Product.MaSP, pageNumber: pageNumber }, // Truyền MaSP từ mô hình của bạn vào đây
+            success: function (data) {
+                // Xử lý dữ liệu nhận được từ server để chứa thông tin dataSource cho phân trang
+                var dataSource = {
+                    data: data, // Dữ liệu đánh giá
+                    pageSize: 3, // Số lượng mục trên mỗi trang
+                    // Các thuộc tính khác của dataSource nếu cần
+                };
+                // Hiển thị dữ liệu đánh giá trong modal
+                $('#ratingsContent').html(data);
+
+                // Hiển thị phân trang
+                $('#ratingPagination').pagination({
+                    dataSource: dataSource, // Chuyển dataSource vào paginationjs
+                    // Các thuộc tính khác của phân trang nếu cần
+                    callback: function (data, pagination) {
+                        // Hàm callback để hiển thị dữ liệu cho từng trang
+                        // data chứa dữ liệu của trang hiện tại
+                        // pagination chứa thông tin phân trang (số trang, trang hiện tại, ...)
+                        $('#ratingsContent').html(data);
+                    }
+                });
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi khi tải đánh giá.');
+            }
+        });
+    }*@
+
+        function filterRatingsModal(productId, ratingValue) {
+        // Sử dụng AJAX để gọi action FilterRatings trong controller
+        $.ajax({
+            url: '/Rating/FilterRatings',
+            type: 'GET',
+            data: { @*MaSP: @Model.Product.MaSP*@ MaSP: productId, ratingValue: ratingValue },
+            success: function (partialView) {
+                // Hiển thị nội dung đánh giá đã lọc trong modal
+                $('#ratingsContentModal').html(partialView);
+                // Xóa phân trang cũ (nếu có)
+                //$('#ratingPagination').empty();
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi khi lọc đánh giá.');
+            }
+        });
+        }
+
+        var currentPage = 1; // Trang hiện tại
+        var totalNumberOfPages = 5; // Số trang tổng cộng
+
+        function loadRatingsWithPagination(pageNumber) {
+        $.ajax({
+        url: '/Rating/ProductRatingsPartial',
+        type: 'GET',
+        data: { MaSP: @Model.Product.MaSP, pageNumber: pageNumber },
+        success: function (data) {
+            // Xử lý dữ liệu nhận được từ server để chứa thông tin dataSource cho phân trang
+            var dataSource = {
+                data: data, // Dữ liệu đánh giá
+                pageSize: 3, // Số lượng mục trên mỗi trang
+            };
+
+            // Tính tổng số trang dựa trên dữ liệu
+            totalNumberOfPages = Math.ceil(data.length / dataSource.pageSize);
+
+            // Hiển thị dữ liệu đánh giá trong modal
+            $('#ratingsContent').html(data);
+
+            // Hiển thị phân trang
+            $('#ratingPagination').pagination({
+                dataSource: dataSource,
+                // Các thuộc tính khác của phân trang nếu cần
+                callback: function (data, pagination) {
+                    $('#ratingsContent').html(data);
+                }
+            });
+        },
+                error: function () {
+                    alert('Đã xảy ra lỗi khi tải đánh giá.');
+                }
+            });
+        }
+
+        function loadPage(pageNumber) {
+            loadRatingsWithPagination(pageNumber);
+            currentPage = pageNumber; // Cập nhật trang hiện tại
+            document.getElementById('paginationCurrentPage').innerHTML = currentPage; // Hiển thị trang hiện tại
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadPage(currentPage);
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < totalNumberOfPages) {
+                currentPage++;
+                loadPage(currentPage);
+            }
+        }
+
+
+
+
     </script>
 }

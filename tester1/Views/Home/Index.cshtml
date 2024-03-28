@@ -36,30 +36,26 @@
 </div>
     -->
 <!-- banner top -->
-<div class="banner-top">
-    <div class="banner-left">
-        <a href="">
-            <img src="~/Content/img/banner_left.jpg" alt="">
-        </a>
-    </div>
+<style>
+    .contact {
+        width:92.4%
+    }
+</style>
 
-    <div class="banner-right">
-        <a href="">
-            <img src="~/Content/img/bannner1.jpg" alt="">
-        </a>
-    </div>
-</div>
-
-
-
+<link href="~/Content/css/animation.css" rel="stylesheet" />
+<style>
+    .row{
+        width:1500px;
+    }
+</style>
 <!-- product-container -->
-<div class="row  product-container">
-    <div style="max-width: 70%;" class="col l-9">
+<div style="margin-left:-40px" class="row  product-container">
+    <div  class="col l-11">
         <div class="contact">
             <div class="phone">
                 <i class="fa-solid fa-phone"></i>
                 <div class="phone-title">
-                    <h3>Đặt hàng nhanh</h3>
+                    <h3>Hotline</h3>
                     <strong>0372374312</strong>
                 </div>
             </div>
@@ -85,46 +81,216 @@
         </div>
         @if (Model.Any())
         {
-            <div class="row">
-                @foreach (var item in Model)
+    <div class="row">
+
+        <div style="" class="row-container">
+            @{
+                var productCount = 0;
+                foreach (var item in Model)
                 {
-                    <div style="max-width: 30.33333%;" class="col l-4 item">
-                        <div class="section-product">
-                            <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
-                                <img height="256" style="object-fit:contain" class="img-product" src="@item.HinhAnh" alt="">
-                            </a>
-                            <div class="title-product">
-                                <h1>
-                                    @item.TenSP
-                                </h1>
-                                <p>
-                                    <small>Giá:</small>
-                                    @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
-                                </p>
+                    if (item.MaDM == 1)
+                    {
+                        <div id="productContainer" class="col l-5 item">
+                            <div class="section-product">
+                                <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
+                                    <img height="256" width="229" style="object-fit:contain" src="@item.HinhAnh" alt="">
+                                </a>
+                                <div class="title-product">
+                                    <h1>
+                                        @item.TenSP
+                                    </h1>
+                                    <p>
+                                        <small>Giá:</small>
+                                        @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                                    </p>
 
-                                <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
-                                    <span>
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        Mua Hàng
-                                    </span>
+                                    <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
+                                        <span>
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Đặt món
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
-                    </div>
+                        productCount++;
+                        if (productCount >= 10) // Giới hạn số lượng sản phẩm
+                        {
+                            break; // Kết thúc vòng lặp khi đạt đến giới hạn
+                        }
+                    }
 
                 }
-            </div>
+            }
+
+
+        </div>
+        <div class="row-container">
+            @{
+                var productCount2 = 0;
+                foreach (var item in Model)
+                {
+                    if (item.MaDM == 2)
+                    {
+                        <div id="productContainer" class="col l-5 item">
+                            <div class="section-product">
+                                <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
+                                    <img height="256" width="229" style="object-fit:contain" src="@item.HinhAnh" alt="">
+                                </a>
+                                <div class="title-product">
+                                    <h1>
+                                        @item.TenSP
+                                    </h1>
+                                    <p>
+                                        <small>Giá:</small>
+                                        @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                                    </p>
+
+                                    <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
+                                        <span>
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Đặt món
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        productCount++;
+                        if (productCount2 >= 10) // Giới hạn số lượng sản phẩm
+                        {
+                            break; // Kết thúc vòng lặp khi đạt đến giới hạn
+                        }
+                    }
+
+                }
+            }
+
+
+        </div>
+
+        <div class="row-container">
+            @{
+                var productCount3 = 0;
+                foreach (var item in Model)
+                {
+                    if (item.MaDM == 3)
+                    {
+                        <div id="productContainer" class="col l-5 item">
+                            <div class="section-product">
+                                <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
+                                    <img height="256" width="229" style="object-fit:contain" src="@item.HinhAnh" alt="">
+                                </a>
+                                <div class="title-product">
+                                    <h1>
+                                        @item.TenSP
+                                    </h1>
+                                    <p>
+                                        <small>Giá:</small>
+                                        @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                                    </p>
+
+                                    <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
+                                        <span>
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Đặt món
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        productCount++;
+                        if (productCount3 >= 10) // Giới hạn số lượng sản phẩm
+                        {
+                            break; // Kết thúc vòng lặp khi đạt đến giới hạn
+                        }
+                    }
+
+                }
+            }
+
+
+        </div>
+
+        <div class="row-container">
+            @{
+                var productCount4 = 0;
+                foreach (var item in Model)
+                {
+                    if (item.MaDM == 4)
+                    {
+                        <div id="productContainer" class="col l-5 item">
+                            <div class="section-product">
+                                <a href="@Url.Action("DetailProduct", "Home", new { id = item.MaSP })">
+                                    <img height="256" width="229" style="object-fit:contain" src="@item.HinhAnh" alt="">
+                                </a>
+                                <div class="title-product">
+                                    <h1>
+                                        @item.TenSP
+                                    </h1>
+                                    <p>
+                                        <small>Giá:</small>
+                                        @string.Format("{0:#,##0}", item.GiaBan)<strong style="text-decoration-line: underline">đ</strong>
+                                    </p>
+
+                                    <div class="btn btn-product" onclick="addToCart(@item.MaSP)">
+                                        <span>
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Đặt món
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        productCount++;
+                        if (productCount4 >= 10) // Giới hạn số lượng sản phẩm
+                        {
+                            break; // Kết thúc vòng lặp khi đạt đến giới hạn
+                        }
+                    }
+
+                }
+            }
+
+
+        </div>
+    </div>
         }
         else
         {
-            <p style="text-align: center; font-size: 20px; line-height: 20px; margin-left: -25px; margin-top: 85px;">Không có sản phẩm nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+        <p style="text-align: center; font-size: 20px; line-height: 20px; margin-left: -25px; margin-top: 85px;">Không có sản phẩm nào phù hợp với từ khóa tìm kiếm của bạn.</p>
         }
     </div>
 
     <!-- sidebar -->
-    @Html.Partial("Sidebar");
 </div>
+<script>
+        const row = document.getElementById('productRow');
+        let scrollAmount = 0;
+        const scrollDelay = 2000; // Thời gian trì hoãn cuộn
+
+        function scrollRow() {
+        const itemWidth = row.querySelector('.item').offsetWidth;
+        if (scrollAmount < itemWidth) {
+            scrollAmount += itemWidth; // Cuộn một lượng bằng chiều rộng của một cột
+        row.scrollTo({
+            left: scrollAmount,
+        behavior: 'smooth' // Hiệu ứng cuộn mượt
+            });
+        } else {
+            scrollAmount = 0; // Cuộn về đầu
+        row.scrollTo({
+            left: scrollAmount,
+        behavior: 'smooth'
+            });
+        }
+    }
+
+        setInterval(scrollRow, scrollDelay); // Tự động cuộn sau mỗi khoảng thời gian
+</script>
 
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

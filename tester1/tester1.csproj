@@ -59,6 +59,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=7.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.0.4\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Apis, Version=1.60.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Apis.1.60.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
@@ -134,6 +143,12 @@
     <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.Base, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.Base.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Configuration.ConfigurationBuilders.UserSecrets, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.2.0.0\lib\Net471\Microsoft.Configuration.ConfigurationBuilders.UserSecrets.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
@@ -168,6 +183,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
@@ -192,12 +210,13 @@
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
@@ -222,9 +241,15 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Security.Claims, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Claims.4.3.0\lib\net46\System.Security.Claims.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -331,6 +356,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DanhMucController.cs" />
     <Compile Include="Areas\Admin\Controllers\DonHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExcelController.cs" />
     <Compile Include="Areas\Admin\Controllers\GioiThieuController.cs" />
     <Compile Include="Areas\Admin\Controllers\KhuyenMaiController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListSPController.cs" />
@@ -344,8 +370,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -354,16 +382,29 @@
       <DependentUpon>202305211505168_role.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccessC.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CTSale.cs" />
     <Compile Include="Models\DailyRevenueSummary.cs" />
+    <Compile Include="Models\DanhMucViewModel.cs" />
+    <Compile Include="Models\Excel.cs" />
     <Compile Include="Models\GmailAuthenticator.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MailHelper1.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MoMoSecurity.cs" />
     <Compile Include="Models\PayCompare.cs" />
     <Compile Include="Models\PayLib.cs" />
+    <Compile Include="Models\PaymentRequest.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductDetailViewModel.cs" />
+    <Compile Include="Models\QLKMai.cs" />
+    <Compile Include="Models\RatingViewModel.cs" />
+    <Compile Include="Models\Resul.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
+    <Compile Include="Models\SalePromotionDTO.cs" />
+    <Compile Include="Models\SanPhamViewModel.cs" />
     <Compile Include="Models\SystemSetting.cs" />
     <Compile Include="Models\ThucDon.designer.cs">
       <AutoGen>True</AutoGen>
@@ -4042,6 +4083,7 @@
     <Content Include="Content\cssChitiet\assets\fonts\themify-icons\themify-icons.css" />
     <Content Include="Content\cssChitiet\assets\img\thitbe.jpg" />
     <Content Include="Content\cssChitiet\style.css" />
+    <Content Include="Content\css\animation.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\footer.css" />
     <Content Include="Content\css\grid.css" />
@@ -4406,13 +4448,48 @@
     <Content Include="Content\fonts\themify-icons\SVG\zoom-in.svg" />
     <Content Include="Content\fonts\themify-icons\SVG\zoom-out.svg" />
     <Content Include="Content\fonts\themify-icons\themify-icons.css" />
+    <Content Include="Content\formLogin\css\main.css" />
+    <Content Include="Content\formLogin\css\util.css" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\formLogin\fonts\montserrat\OFL.txt" />
+    <Content Include="Content\formLogin\images\icons\favicon.ico" />
+    <Content Include="Content\formLogin\images\img-01.png" />
+    <Content Include="Content\formLogin\js\main.js" />
+    <Content Include="Content\formLogin\vendor\animate\animate.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\formLogin\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\formLogin\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\formLogin\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\formLogin\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\formLogin\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\formLogin\vendor\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\formLogin\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\formLogin\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\formLogin\vendor\select2\select2.css" />
+    <Content Include="Content\formLogin\vendor\select2\select2.js" />
+    <Content Include="Content\formLogin\vendor\select2\select2.min.css" />
+    <Content Include="Content\formLogin\vendor\select2\select2.min.js" />
+    <Content Include="Content\formLogin\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="Content\img\1f.jpg" />
     <Content Include="Content\img\2.jpg" />
     <Content Include="Content\img\banner1.htm" />
     <Content Include="Content\img\border-slide.png" />
     <Content Include="Content\img\ca-chua-bi.htm" />
+    <Content Include="Content\img\cod.jpg" />
+    <Content Include="Content\img\failed.png" />
+    <Content Include="Content\img\hinh.jpg" />
+    <Content Include="Content\img\momo.jpg" />
     <Content Include="Content\img\payment-successful-template-vector-art-success-ful-206586442.jpg" />
     <Content Include="Content\img\silder4.jpg" />
+    <Content Include="Content\img\vnpay.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\template\neworder.html" />
     <Content Include="Content\template\send1.html" />
@@ -4643,6 +4720,12 @@
     <Content Include="Areas\Admin\Views\KhuyenMai\KhuyenMai.cshtml" />
     <Content Include="Areas\Admin\Views\KhuyenMai\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KhuyenMai\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\ThongKeSp.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\CategoryP.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\SpTheoId.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\ViewAccess.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\ShowDataGetOrder.cshtml" />
+    <Content Include="Areas\Admin\Views\ThongKe\ShowDatarevenue.cshtml" />
     <None Include="Assets\Client\img\pro-top.pg" />
     <Content Include="Assets\Client\img\vaiheo.jpg" />
     <Content Include="Content\img\banner_left.webp" />
@@ -4730,6 +4813,81 @@
       <LastGenOutput>ThucDon.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\formLogin\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Black.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-BlackItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Bold.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-BoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-ExtraBold.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-ExtraBoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-ExtraLight.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-ExtraLightItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Italic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Light.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-LightItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Medium.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-MediumItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Regular.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-SemiBold.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-SemiBoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-Thin.ttf" />
+    <Content Include="Content\formLogin\fonts\montserrat\Montserrat-ThinItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Black.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-BlackItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Bold.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-BoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-ExtraBold.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-ExtraBoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-ExtraLight.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-ExtraLightItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Italic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Light.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-LightItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Medium.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-MediumItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Regular.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-SemiBold.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-Thin.ttf" />
+    <Content Include="Content\formLogin\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\formLogin\vendor\bootstrap\css\bootstrap.min.css.map" />
     <None Include="Models\ThucDon.dbml.layout">
       <DependentUpon>ThucDon.dbml</DependentUpon>
     </None>
@@ -4794,12 +4952,25 @@
     <Content Include="Views\User\OrderDetails.cshtml" />
     <Content Include="Views\User\Partial_SanPham.cshtml" />
     <Content Include="Views\Home\DetailProduct.cshtml" />
+    <Content Include="Views\Voucher\Voucher.cshtml" />
+    <Content Include="Views\AddCart\GetSalesForUser.cshtml" />
+    <Content Include="Views\AddCart\ConfirmPaymentClient.cshtml" />
+    <Content Include="Views\Rating\Create.cshtml" />
+    <Content Include="Views\Rating\Edit.cshtml" />
+    <Content Include="Views\Rating\ReviewNotFound.cshtml" />
+    <Content Include="Views\Account\ConfirmEmailSent.cshtml" />
+    <Content Include="Views\Rating\ProductRatingsPartial.cshtml" />
+    <Content Include="Views\Rating\FilterRatings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Excel\" />
+    <Folder Include="Assets\asset Voucher\" />
+    <Folder Include="JS\" />
     <Folder Include="Views\Order\" />
     <Folder Include="Views\Product\" />
+    <Folder Include="Views\Sale\" />
     <Folder Include="Views\SendMail\" />
   </ItemGroup>
   <ItemGroup>

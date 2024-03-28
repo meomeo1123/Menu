@@ -1,11 +1,12 @@
-﻿@model IEnumerable<tester1.Models.KhuyenMai>
-
+﻿@model IEnumerable<tester1.Models.QLKMai>
 @{
     ViewBag.Title = "KhuyenMai";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>KhuyenMai</h2>
+
+
+<h2>Khuyến mãi</h2>
 <style>
     /* Áp dụng CSS cho bảng */
     table {
@@ -27,10 +28,6 @@
     tbody tr:hover {
         background-color: #f5f5f5;
     }
-
-   
-
-   
 </style>
 
 <table class="table table-striped">
@@ -40,6 +37,7 @@
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
             <th>Giá trị sale</th>
+            <th>Số lượng</th>
             <th></th>
         </tr>
     </thead>
@@ -48,25 +46,26 @@
         {
         <tr>
 
-            <td>@item.NameKm</td>
-            <td>@(item.StartTime.HasValue ? item.StartTime.Value.ToString("dd/MM/yyyy") : "")</td>
-            <td>@(item.EndTime.HasValue ? item.EndTime.Value.ToString("dd/MM/yyyy") : "")</td>
-            <td>@item.PromoSale<span>%</span></td>
+            <td>@item.KhuyenMai.NameKm</td>
+            <td>@(item.KhuyenMai.StartTime.HasValue ? item.KhuyenMai.StartTime.Value.ToString("dd/MM/yyyy") : "")</td>
+            <td>@(item.KhuyenMai.EndTime.HasValue ? item.KhuyenMai.EndTime.Value.ToString("dd/MM/yyyy") : "")</td>
+            <td>@item.KhuyenMai.PromoSale<span>%</span></td>
+            <td>@item.KhuyenMai.Quantity</td>
             <td>
-                <button class="btn-icon-split btn btn-warning" type="button" onclick="location.href='@Url.Action("Edit", "KhuyenMai", new { id = item.IdKm })'">
+                <button class="btn-icon-split btn btn-warning" type="button" onclick="location.href='@Url.Action("Edit", "KhuyenMai", new { id = item.KhuyenMai.IdKm })'">
                     <span class="icon text-white">
                         <i class="fas fa-exclamation-triangle"></i>
                         <span style="padding : 0" class="text">
-                            Edit
+                            Sửa
                         </span>
                     </span>
                 </button>
 
-                <button class="btn-icon-split btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "KhuyenMai", new { id = item.IdKm })'">
+                <button class="btn-icon-split btn btn-danger" type="button" onclick="location.href='@Url.Action("Delete", "KhuyenMai", new { id = item.KhuyenMai.IdKm })'">
                     <span class="icon text-white">
                         <i class="fas fa-trash"></i>
                         <span style="padding : 0" class="text">
-                            Delete
+                            Xóa
                         </span>
                     </span>
                 </button>
@@ -79,7 +78,7 @@
         <button class="btn-icon-split btn btn-success" type="button" onclick="location.href='@Url.Action("Create", "KhuyenMai")'">
             <span class="icon text-white">
                 <span style="padding : 0" class="text">
-                    Create
+                    Tạo
                 </span>
             </span>
         </button>
