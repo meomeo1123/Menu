@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "ShowDatarevenue";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thống Kê doanh thu</h2>
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .amcharts-chart-div .amcharts-plot-container .amcharts-graph-column {
+        width: 20px; /* Điều chỉnh độ rộng mong muốn */
+    }
+</style>
+<div>
+    <form id="filterForm" class="m-3">
+        <div class="form-group row">
+            <label for="startDate" class="col-sm-2 col-form-label">Start Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="startDate" name="startDate">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="endDate" class="col-sm-2 col-form-label">End Date:</label>
+            <div class="col-sm-4">
+                <input type="date" class="form-control" id="endDate" name="endDate">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <button type="button" id="filterButton" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Import thư viện Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- HTML Canvas để vẽ biểu đồ -->
+<div id="chartdiv" style="width: 100%; height: 500px;"></div>
+
+<!-- Script JavaScript để gọi API và vẽ biểu đồ -->
+<script>
+    function formatDate(epochDate) {
+        const date = new Date(parseInt(epochDate.substr(6)));
+        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        return formattedDate;
+    }
+
+    // Gọi API và lấy dữ liệu
+    $.ajax({
+        url: '/ThongKe/RevenueStatistics', // Đường dẫn đến API của bạn
+        type: 'GET',
+        success: function (data) {
+            var chartData = data.map(entry => ({
+                date: formatDate(entry.Date),
+                revenue: entry.Revenue,
+                cost: entry.Cost,
+                profit: entry.DT
+            }));
+
+            var chart = am4core.create("chartdiv", am4charts.XYChart);
+            chart.data = chartData;
+
+            // Tạo trục x cho biểu đồ
+            var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+            dateAxis.dataFields.category = "date";
+            dateAxis.renderer.minGridDistance = 50;
+
+            // Tạo các series cho biểu đồ
+            var revenueSeries = chart.series.push(new am4charts.ColumnSeries());
+            revenueSeries.dataFields.valueY = "revenue";
+            revenueSeries.dataFields.dateX = "date";
+            revenueSeries.name = "Doanh thu";
+
+            var costSeries = chart.series.push(new am4charts.ColumnSeries());
+            costSeries.dataFields.valueY = "cost";
+            costSeries.dataFields.dateX = "date";
+            costSeries.name = "Chi phí";
+
+            var profitSeries = chart.series.push(new am4charts.ColumnSeries());
+            profitSeries.dataFields.valueY = "profit";
+            profitSeries.dataFields.dateX = "date";
+            profitSeries.name = "Lợi nhuận";
+
+            // Add legend
+            chart.legend = new am4charts.Legend();
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+</script>
+
+
+<script>
+
+    $('#filterButton').on('click', function () {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+        // Kiểm tra nếu startDate lớn hơn endDate
+        if (start > end) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu',
+            });
+            return; // Không gửi yêu cầu nếu có lỗi
+        } else if (end > new Date()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Ngày kết thúc không được lớn hơn ngày hiện tại',
+            });
+            return; // Không gửi yêu cầu nếu có lỗi
+        }
+
+        // Xóa biểu đồ cũ nếu tồn tại
+        var existingChart = $('#myChart').data('chart');
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        $.ajax({
+            url: '/ThongKe/RevenueStatistics', // Đường dẫn đến API của bạn
+            type: 'GET',
+            data: { startDate: startDate, endDate: endDate }, // Thêm dữ liệu lọc
+            success: function (data) {
+                // Tạo mảng chứa dữ liệu cho biểu đồ
+                var dates = data.map(entry => formatDate(entry.Date));
+                var revenues = data.map(entry => entry.Revenue);
+                var costs = data.map(entry => entry.Cost);
+                var profits = data.map(entry => entry.DT);
+
+                // Vẽ biểu đồ mới
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: dates,
+                        datasets: [
+                            {
+                                label: 'Tổng tiền',
+                                data: revenues,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Chi phí',
+                                data: costs,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Doanh thu',
+                                data: profits,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+</script>

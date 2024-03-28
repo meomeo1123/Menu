@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "PaymentConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.mess == "0")
+{
+    <style>
+        #content {
+            background: #fff;
+        }
+    </style>
+    <div style="padding: 50px; text-align: center;">
+        <h2 style="font-size: 30px; color: #28a745; margin-bottom: 20px;">Bạn đã đặt hàng thành công!</h2>
+        <img src="~/Content/img/payment-successful-template-vector-art-success-ful-206586442.jpg" alt="Success Image" style="width: 200px; margin-bottom: 30px;">
+        <p style="font-size: 18px;">Cảm ơn bạn đã mua hàng!</p>
+    </div>
+}
+else
+{
+    <style>
+        #content {
+            background: #fff;
+        }
+        .custom-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .custom-button:hover {
+                background-color: #2980b9;
+            }
+    </style>
+    <div style="padding: 50px; text-align: center;">
+        <h2 style="font-size: 30px; color: #28a745; margin-bottom: 20px;">Thanh toán thất bại!</h2>
+        <img src="~/Content/img/failed.png"  alt="failed Image" style="width: 200px; margin-bottom: 30px;">
+        <p style="font-size: 20px; color: #28a745; margin-bottom: 20px;">Thử thanh toán lại!</p>
+        <button class="custom-button" onclick="window.location.href='/AddCart/Index'">Chuyển hướng</button>
+    </div>
+
+}

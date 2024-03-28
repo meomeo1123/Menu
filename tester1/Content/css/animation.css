@@ -1,0 +1,32 @@
+﻿.titlecate {
+    margin-bottom: 20px;
+    margin-left: 10px;
+    width: 300px;
+    position: relative;
+    font-size: 2.5rem;
+    color: #232222;
+    text-transform: uppercase;
+}
+
+    .titlecate::before {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 110%;
+        color: #1dc485;
+        overflow: hidden;
+        animation: animate 5s linear infinite;
+    }
+
+@keyframes animate {
+    0%,10%,100% {
+        width: 0;
+    }
+
+    70%,90% {
+        width: 70%;
+    }
+}
+

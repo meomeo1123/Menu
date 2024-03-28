@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "SpTheoId";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    string tenSanPham = Session["TenSanPham"] as string;
+}
+
+@if (!string.IsNullOrEmpty(tenSanPham))
+{
+    <p>Tên sản phẩm: @tenSanPham</p>
+}
+
+<!-- Định nghĩa canvas cho biểu đồ -->
+<div style="width:700px; height:500px; margin:0 auto">
+    <canvas id="pieChart" width="300" height="200"></canvas>
+
+</div>
+<!-- Import thư viện Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy dữ liệu từ ViewBag
+        var tongSoLuongDonHang = @Html.Raw(Json.Encode(ViewBag.TongSoLuongDonHang));
+        var tongSoDonHangId = @Html.Raw(Json.Encode(ViewBag.TongSoDonHangId));
+
+        var ctx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Tất cả đơn hàng', 'Đơn hàng theo sản phẩm'],
+                datasets: [{
+                    label: 'Biểu đồ so sánh',
+                    data: [tongSoLuongDonHang, tongSoDonHangId],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(75, 192, 192, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                // Các tùy chọn khác của biểu đồ
+            }
+        });
+    });
+</script>

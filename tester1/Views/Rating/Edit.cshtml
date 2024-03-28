@@ -1,0 +1,92 @@
+﻿@model tester1.Models.RatingViewModel
+@{
+    ViewBag.Title = "Edit Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    h2 {
+        font-size: 30px;
+    }
+
+    .ratingStar {
+        margin-top: 15px;
+        color: gold; /* Màu vàng thay vì màu cam */
+        font-size: 24px; /* Kích thước ngôi sao */
+        margin-right: 5px; /* Khoảng cách giữa các ngôi sao */
+        transition: color 0.3s ease; /* Chuyển đổi màu trong 0.3 giây với hiệu ứng dễ dàng */
+        cursor: pointer; /* Hiển thị con trỏ khi di chuột */
+    }
+
+        .ratingStar:hover {
+            color: orange;
+        }
+
+    .form-control1 {
+        width: 30%; /* Sử dụng toàn bộ chiều rộng của container */
+        height: 150px; /* Đặt chiều cao cố định */
+        resize: vertical; /* Cho phép chỉ cuộn dọc */
+        margin-top: 10px; /* Khoảng cách giữa textarea và ngôi sao */
+        border-width: 3px; /* Độ dày 3px */
+        border-style: solid; /* Kiểu nét là solid */
+        border-color: #e6e6e6; /* Màu sắc của viền */
+        background-color: rgb(241, 243, 244);
+    }
+
+    .btn-primary {
+        background-color: #1dc485;
+        color: black; /* Màu chữ trắng */
+        border: none; /* Không có đường viền */
+        padding: 10px 20px; /* Kích thước padding */
+        font-size: 16px; /* Kích thước chữ */
+        cursor: pointer; /* Hiển thị con trỏ khi di chuột */
+        width: 55px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+
+        .btn-primary:hover {
+            background-color: #50ab56;
+        }
+</style>
+<h2>Chỉnh sửa đánh giá</h2>
+@using (Html.BeginForm("Edit", "Rating", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <span class="text-warning">
+        @{
+            int ratingValue = Model.Rating; // Giá trị đánh giá từ model
+            for (int i = 1; i <= 5; i++)
+            {
+                <i class="ratingStar @((i <= ratingValue) ? "fas" : "far") fa-star" data-value="@i"></i>
+            }
+        }
+    </span>
+
+    @Html.HiddenFor(model => model.Rating, new { id = "ratingsValue" })
+
+    <div class="form-group">
+        @Html.TextAreaFor(model => model.NoiDung, new { @class = "form-control1" })
+        @Html.ValidationMessageFor(model => model.NoiDung)
+        @Html.HiddenFor(model => model.MaSP)
+        @Html.HiddenFor(model => model.MaDH)
+        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i></button>
+    </div>
+}
+
+@section Scripts{
+    <script src="https://kit.fontawesome.com/bfd8721e82.js" crossorigin="anonymous"></script>
+    <script>
+        $(".ratingStar").hover(function () {
+            $(".ratingStar").addClass("far").removeClass("fas");
+            $(this).addClass("fas").removeClass("far");
+            $(this).prevAll(".ratingStar").addClass("fas").removeClass("far");
+        });
+
+        $(".ratingStar").click(function () {
+            var starValue = $(this).attr("data-value");
+            $("#ratingsValue").val(starValue); // Cập nhật giá trị đánh giá
+            //$("#Rating").val(starValue); // Cập nhật giá trị Rating
+        });
+    </script>
+}

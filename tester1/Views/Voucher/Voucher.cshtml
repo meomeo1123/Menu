@@ -1,0 +1,127 @@
+﻿@model IEnumerable<tester1.Models.QLKMai>
+@{
+    ViewBag.Title = "Voucher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/grid.css" rel="stylesheet" />
+<link href="~/Content/css/base.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+    .voucher-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .voucher-card {
+        width: 300px;
+        margin: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .voucher-card:hover {
+            transform: scale(1.05);
+        }
+
+        .voucher-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+    .voucher-details {
+        color: #333;
+    }
+
+        .voucher-details h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .voucher-details p {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+    .food-icon {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .voucher-button {
+        margin-top: 15px;
+    }
+
+        .voucher-button button {
+            font-size: 1.2rem;
+            background-color: #ff5722; /* Lazada's primary color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .voucher-button button:hover {
+                background-color: #f4511e; /* Darken the color on hover */
+            }
+</style>
+<div class="container">
+    <div class="voucher-container">
+        @foreach (var item in Model)
+        {
+            if (!item.IsSaved)
+            {
+                <div class="voucher-card">
+                    <div class="food-icon">&#127829;</div> <!-- Food icon or use an image -->
+                    <div class="voucher-details">
+                        <h4>@item.KhuyenMai.NameKm</h4>
+                        <p>@(item.KhuyenMai.StartTime.HasValue ? item.KhuyenMai.StartTime.Value.ToString("dd/MM/yyyy") : "") - @(item.KhuyenMai.StartTime.HasValue ? item.KhuyenMai.EndTime.Value.ToString("dd/MM/yyyy") : "")</p>
+                        <p style=" font-size: 18px; font-weight: 700; color: #f4511e;"> @item.KhuyenMai.PromoSale%</p>
+                    </div>
+                    <div class="voucher-button">
+                        <button onclick="savePromotion('@item.KhuyenMai.IdKm', this)" @(item.IsSaved ? "disabled" : "")>Lưu mã</button>
+                    </div>
+                </div>
+
+            }
+        }
+
+        <script>
+            function savePromotion(promotionId, button) {
+                $.ajax({
+                    url: '/Voucher/SavePromotion',
+                    type: 'POST',
+                    data: { promotionId: promotionId },
+                    success: function (data) {
+                        if (data.success) {
+                            // Ẩn nút sau khi đã lưu thành công
+                            $(button).prop('disabled', true);
+                            alert('Lưu mã thành công!');
+                            // Reload lại trang
+                            location.reload();
+                        } else {
+                            alert('Lưu thành công!');
+                            location.reload();
+                        }
+                    },
+                    error: function () {
+                        alert('Đã xảy ra lỗi!');
+                    }
+                });
+            }
+
+        </script>
+
+
+    </div>
+</div>

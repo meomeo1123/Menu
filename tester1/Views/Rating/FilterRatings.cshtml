@@ -1,0 +1,75 @@
+﻿@model List<tester1.Models.DanhGia>
+
+<style>
+    .ratings {
+        position: absolute;
+        right: 10%;
+        top: 33.5%;
+    }
+
+    .ratings {
+        max-height: 450px; /* Đặt chiều cao tối đa của thẻ div */
+        overflow-y: auto; /* Tạo thanh cuộn dọc khi cần */
+        overflow-x: hidden; /* Ẩn thanh cuộn ngang nếu không cần */
+        padding-left: 20px;
+    }
+
+        .ratings::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Làm thanh cuộn nhỏ lại */
+        .ratings::-webkit-scrollbar {
+            width: 5px; /* Độ rộng của thanh cuộn */
+        }
+
+        .ratings::-webkit-scrollbar-thumb {
+            background-color: #888; /* Màu nền của thanh cuộn */
+            border-radius: 10px; /* Độ cong của viền thanh cuộn */
+        }
+</style>
+<div class="ratings" style=" width:500px; ">
+    <h1 style="padding:10px 0 15px 0">Đánh giá đã lọc</h1>
+
+    @if (Model != null)
+    {
+        <div>
+            @foreach (var rating in Model)
+            {
+                <div style="padding-top: 30px; padding-left:55px;padding-right:20px">
+
+
+                    <img style="border-radius: 300px; width:50px; height:50px; margin-left: -60px;" src="~/Content/img/hinh.jpg" />
+                    <p style="margin-top: -40px; font-size:larger;">@rating.Name</p>
+                    <p style="margin-left: 5px; margin-top: 30px;  width: 500px; color: red;">@rating.NgayRate</p>
+                    <!-- Hiển thị ngôi sao đánh giá -->
+
+                    @if (rating.Rating > 0)
+                    {
+                        var defaultStar = 5 - rating.Rating;
+                        <span class="text-warning" style="color:gold; font-size:13px;">
+                            @for (int i = 1; i <= rating.Rating; i++)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                            @for (int i = 1; i <= defaultStar; i++)
+                            {
+                                <i class="far fa-star"></i>
+                            }
+                        </span>
+
+                        <p style="margin-top: 20px; font-size: 15px" class="NoiDung"> @rating.NoiDung</p>
+                    }
+                    else
+                    {
+                        <span>Chưa có đánh giá.</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p style="margin-top:50px;">Chưa có đánh giá nào cho sản phẩm này.</p>
+    }
+</div>

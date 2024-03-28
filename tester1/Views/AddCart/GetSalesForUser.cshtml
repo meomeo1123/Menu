@@ -1,0 +1,115 @@
+﻿@model List<tester1.Models.SalePromotionDTO>
+@{
+    ViewBag.Title = "GetSalesForUser";
+}
+<style>
+    #voucherForm {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-left:15px;
+        margin-top: 10px;
+    }
+
+    .voucher-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 250px;
+    }
+
+        .voucher-card:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .voucher-card-content {
+        padding: 20px;
+    }
+
+    .voucher-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .voucher-percent {
+        font-size: 24px;
+        font-weight: bold;
+        color: #e44d26; /* Lazada red color */
+        text-align: center;
+    }
+
+    .voucher-button {
+        display: block;
+        width: 30%;
+        padding: 5px;
+        background-color: #e44d26; /* Lazada red color */
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 70px;
+    }
+
+        .voucher-button:hover {
+            background-color: #ff7043; /* Lighter red on hover */
+        }
+</style>
+
+@if (Model != null && Model.Any())
+{
+    @Html.AntiForgeryToken()
+    <form id="voucherForm" method="post" action="/AddCart/Payment">
+        @foreach (var sale in Model)
+        {
+            if (sale.ChiTietSale.Status > 0)
+            {
+                <div class="voucher-card">
+                    <div class="voucher-card-content">
+                        <input type="hidden" name="selectedPromotionId" class="promoSaleRadio" data-id="@sale.KhuyenMai.IdKm" value="@sale.KhuyenMai.PromoSale">
+                        <div class="voucher-title">Khuyến mãi: @sale.KhuyenMai.NameKm</div>
+                        <div class="voucher-percent">@sale.KhuyenMai.PromoSale<span>%</span></div>
+                        <button type="button" class="voucher-button" onclick="submitVoucher(this)">Chọn</button>
+                    </div>
+                </div>
+            }
+        }
+    </form>
+}
+else
+{
+    <p class="text-danger" style="margin-left:10px; margin-top:10px">Hiện đang không có voucher nào.</p>
+}
+
+<script>
+    function submitVoucher(button) {
+        const parentListItem = button.parentNode;
+        const newlySelectedPromotionId = parentListItem.querySelector('.promoSaleRadio');
+        if (newlySelectedPromotionId) {
+            const promoSale = newlySelectedPromotionId.value;
+            const promoId = newlySelectedPromotionId.getAttribute('data-id');
+
+            // Gửi dữ liệu promoSale lên server
+            $.ajax({
+                url: '/AddCart/SubmitPromoSale',
+                type: 'POST',
+                data: { promoSale: promoSale, promoId: promoId },
+                success: function (result) {
+                    console.log(promoSale);
+                    // Xử lý kết quả nếu cần thiết
+                    // Sau khi gửi thành công, có thể chuyển trang hoặc gọi hàm GetPromoSale()
+                    updatePromoSale();
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần thiết
+                }
+            });
+        } else {
+            alert('Vui lòng chọn một voucher');
+        }
+    }
+</script>

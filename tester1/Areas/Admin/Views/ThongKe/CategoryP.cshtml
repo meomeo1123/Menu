@@ -1,0 +1,116 @@
+﻿@model IEnumerable<tester1.Models.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="card shadow mb-4">
+    <div class="card-body ">
+        @if (ViewBag.Categories != null)
+        {
+            <select class="form-control" style="width: 135px" id="categoryId">
+                <option value="0">-- All --</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.MaDM">@category.TenDM</option>
+                }
+            </select>
+        }
+        <div class="container mt-3" style="width: 400px; float:left;margin-left:-20px;margin-bottom:30px">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="startDate">Ngày bắt đầu:</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate">
+                </div>
+                <div class="col-md-6">
+                    <label for="endDate">Ngày kết thúc:</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên Món</th>
+                        <th>
+                            <button style="display:none">Chọn</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-category="@item.MaDM">
+                            <td>@item.TenSP</td>
+                            <td>
+                                <button id="selectButton_@item.MaSP" class="btn btn-primary" onclick="setIdToSession(@item.MaSP)">Chọn</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<script>
+        $(document).ready(function () {
+            $("#categoryId").on("change", function () {
+                var categoryId = $(this).val();
+                if (categoryId == "0") {
+                    // Show all products
+                    $("table tbody tr").show();
+                } else {
+                    // Show only products with selected category
+                    $("table tbody tr").hide();
+                    if (categoryId != null) {
+                        $("table tbody tr[data-category='" + categoryId + "']").show();
+                    }
+                }
+            });
+    });
+        function setIdToSession(productId) {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        var fromDate = new Date(startDate);
+        var toDate = new Date(endDate);
+        var today = new Date();
+
+        // Kiểm tra ngày hợp lệ
+        if (fromDate > today || toDate > today) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Ngày không được lớn hơn ngày hiện tại',
+            });
+        return;
+        } else if (fromDate > toDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Ngày kết thúc không được nhỏ hơn ngày bắt đầu',
+            });
+        return;
+        }
+
+        $.ajax({
+            url: '/ThongKe/ThongKeSp',
+        method: 'POST',
+        data: {id: productId, startDate: startDate, endDate: endDate },
+        success: function () {
+            console.log(startDate, endDate, productId);
+        // Đã lưu ID sản phẩm vào session, chuyển hướng đến trang khác
+        window.location.href = 'SpTheoId';
+            },
+        error: function () {
+            console.log('Error setting product ID to session.');
+            }
+        });
+    }
+</script>
+
+
